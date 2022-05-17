@@ -32,7 +32,7 @@ public class Anketa {
 
     private GodinaStudija godinaStudija;
 
-    private boolean prviPutUpisujeGodinu;
+    private TipUpisaGodine tipUpisaGodine;
 
     private int brUpisanihESPB; // posto se ovo ne unosi nego generise na osnovu liste predmeta da li je potrebno da se nekako exclude-uju iz onih anotacija gore o konstruktoru i builderu
 
@@ -40,7 +40,7 @@ public class Anketa {
     private List<Predmet> listaPredmeta;
 
     @ManyToOne
-    private String email;
+    private String emailStudenta;
 
 
     private void setBrUpisanihESPB() {
@@ -53,5 +53,7 @@ public class Anketa {
         PRVA, DRUGA, TRECA, CETVRTA
     }
 
-
+    private enum TipUpisaGodine {
+        PRVI_USLOVNO, USLOVNO, PONOVO
+    }
 }

@@ -16,13 +16,13 @@ import java.util.List;
 public class Student {
 
     @Id
-    String email;
+    private String email;
 
     @ManyToOne
-    StudijskaGrupa studijskaGrupa;
+    private StudijskaGrupa studijskaGrupa;
 
-    @OneToMany(mappedBy = "email", cascade = CascadeType.ALL, orphanRemoval = true)
-    List<Anketa> ankete;
+    @OneToMany(mappedBy = "emailStudenta", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Anketa> ankete;
 
     // ugovorOStudiranju?
 
