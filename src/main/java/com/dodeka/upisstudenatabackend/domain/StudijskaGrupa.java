@@ -14,10 +14,10 @@ import javax.persistence.OneToMany;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class Grupa {
+public class StudijskaGrupa {
     @Id
     int grupaId;
 
-    @OneToMany(mappedBy = "grupa")
+    @OneToMany(mappedBy = "studijskaGrupa")
     Student student;
 }
