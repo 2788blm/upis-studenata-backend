@@ -17,6 +17,7 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 public class SkolskaGodina {
+    
     @Id
     private String godina; // ne razumem ovo, jel je ovo jedna godina 2016, ili dve 2016/17 ?
 

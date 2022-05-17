@@ -19,7 +19,7 @@ public class Student {
     private String email;
 
     @ManyToOne
-    private StudijskaGrupa studijskaGrupa;
+    private GrupaZaSlusanjeNastave grupaZaSlusanjeNastave;
 
     @OneToMany(mappedBy = "emailStudenta", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Anketa> ankete;

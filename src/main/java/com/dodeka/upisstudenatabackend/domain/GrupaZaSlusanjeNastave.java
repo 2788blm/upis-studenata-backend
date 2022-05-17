@@ -14,7 +14,7 @@ import javax.persistence.OneToMany;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class StudijskaGrupa {
+public class GrupaZaSlusanjeNastave {
     @Id
     int grupaId;
 
