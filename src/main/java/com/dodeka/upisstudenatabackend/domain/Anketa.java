@@ -19,41 +19,25 @@ public class Anketa {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int anketaId;
-
-    @UpdateTimestamp
-    private LocalDateTime datumPopunjavanjaAnkete;
-
-    private String imeStudenta;
-
-    private String prezimeStudenta;
-
-    private String brIndeksa; // smer, broj, godina upisa; ne znam kako tacno ovo treba da izgleda
-
-    private GodinaStudija godinaStudija;
-
-    private TipUpisaGodine tipUpisaGodine;
-
-    private int brUpisanihESPB; // posto se ovo ne unosi nego generise na osnovu liste predmeta da li je potrebno da se nekako exclude-uju iz onih anotacija gore o konstruktoru i builderu
-
-    @ManyToMany(mappedBy = "listaPredmeta", cascade = CascadeType.ALL)
-    private List<Predmet> listaPredmeta;
+    private int id;
 
     @ManyToOne
-    private String emailStudenta;
+    private Student student;
 
+    @UpdateTimestamp
+    private LocalDateTime datum;
 
-    private void setBrUpisanihESPB() {
-        for(Predmet predmet : listaPredmeta) {
-            brUpisanihESPB += predmet.getBrESPB();
+    private int godinaStudija;
+
+    private int espb;
+
+    @ManyToMany
+    private List<Predmet> predmeti;
+
+    public void setEspb() {
+        espb = 0;
+        for (Predmet predmet : predmeti) {
+            espb += predmet.getEspb();
         }
-    }
-
-    public enum GodinaStudija {
-        PRVA, DRUGA, TRECA, CETVRTA
-    }
-
-    private enum TipUpisaGodine {
-        PRVI_USLOVNO, USLOVNO, PONOVO
     }
 }

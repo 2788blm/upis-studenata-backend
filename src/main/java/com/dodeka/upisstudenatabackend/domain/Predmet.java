@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.validation.annotation.Validated;
 
 import javax.persistence.*;
 
@@ -16,25 +17,21 @@ public class Predmet {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int predmetId;
-
-    private String nazivPredmeta;
-
-    private int brESPB;
-
-    private int semestar;   // kako da odradim min max value,
-
-    private TipPredmeta tip;
-
-    @ManyToOne
-    private GrupaPredmeta grupaPredmeta;
+    private int id;
 
     @ManyToOne
     private SkolskaGodina skolskaGodina;
 
+    @Enumerated(EnumType.STRING)
+    private Smer smer;
 
-    enum TipPredmeta {
-        OBAVEZAN, IZBORNI
-    }
+    private String naziv;
+
+    private int espb;
+
+    private int semestar;
+
+    @Enumerated(EnumType.STRING)
+    private TipPredmeta tip;
 
 }

@@ -5,19 +5,23 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 
 @Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class GrupaZaSlusanjeNastave {
-    @Id
-    int grupaId;
+public class StudijskaGrupa {
 
-    @OneToMany(mappedBy = "studijskaGrupa")
-    Student student;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+
+    @ManyToOne
+    private SkolskaGodina skolskaGodina;
+
+    private String naziv;
+
+
 }

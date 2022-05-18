@@ -18,13 +18,21 @@ public class Student {
     @Id
     private String email;
 
+    private String ime;
+
+    private String prezime;
+
+    @Enumerated(EnumType.STRING)
+    private Smer smer;
+
+    private int brojIndeksa;
+
+    private int godinaUpisa;
+
     @ManyToOne
-    private GrupaZaSlusanjeNastave grupaZaSlusanjeNastave;
+    private StudijskaGrupa studijskaGrupa;
 
-    @OneToMany(mappedBy = "emailStudenta", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "student", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Anketa> ankete;
-
-    // ugovorOStudiranju?
-
 
 }

@@ -19,8 +19,8 @@ import java.util.List;
 public class SkolskaGodina {
     
     @Id
-    private String godina; // ne razumem ovo, jel je ovo jedna godina 2016, ili dve 2016/17 ?
+    private String godina;
 
-    @OneToMany(mappedBy = "predmetId", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "predmet", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Predmet> predmeti;
 }
