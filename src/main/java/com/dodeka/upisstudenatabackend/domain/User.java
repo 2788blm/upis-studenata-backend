@@ -21,10 +21,14 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userId;
 
+    private String email;
+
     private String username;
 
     private String password;
 
     private Role role;
+
+    private boolean active;
 
 }

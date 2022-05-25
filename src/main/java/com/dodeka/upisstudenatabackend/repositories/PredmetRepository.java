@@ -1,4 +1,4 @@
-package com.dodeka.upisstudenatabackend.repository;
+package com.dodeka.upisstudenatabackend.repositories;
 
 import com.dodeka.upisstudenatabackend.domain.Predmet;
 import org.springframework.data.jpa.repository.JpaRepository;

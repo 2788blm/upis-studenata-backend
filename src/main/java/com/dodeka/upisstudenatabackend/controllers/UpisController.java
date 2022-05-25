@@ -1,8 +1,8 @@
-package com.dodeka.upisstudenatabackend.controller;
+package com.dodeka.upisstudenatabackend.controllers;
 
 import com.dodeka.upisstudenatabackend.domain.Predmet;
 import com.dodeka.upisstudenatabackend.dto.AnketaDto;
-import com.dodeka.upisstudenatabackend.service.UpisService;
+import com.dodeka.upisstudenatabackend.services.UpisService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

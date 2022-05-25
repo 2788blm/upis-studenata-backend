@@ -1,13 +1,12 @@
-package com.dodeka.upisstudenatabackend.service;
+package com.dodeka.upisstudenatabackend.services;
 
 import com.dodeka.upisstudenatabackend.domain.Anketa;
 import com.dodeka.upisstudenatabackend.domain.Predmet;
 import com.dodeka.upisstudenatabackend.domain.Student;
 import com.dodeka.upisstudenatabackend.dto.AnketaDto;
-import com.dodeka.upisstudenatabackend.repository.AnketaRepository;
-import com.dodeka.upisstudenatabackend.repository.PredmetRepository;
-import com.dodeka.upisstudenatabackend.repository.StudentRepository;
-import org.springframework.beans.BeanUtils;
+import com.dodeka.upisstudenatabackend.repositories.AnketaRepository;
+import com.dodeka.upisstudenatabackend.repositories.PredmetRepository;
+import com.dodeka.upisstudenatabackend.repositories.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -48,6 +47,7 @@ public class UpisService {
         anketaRepository.save(anketa);
     }
 
+    @Transactional
     public List<Predmet> returnAvailableSubjects(AnketaDto anketaDto) {
         List<Predmet> odgovarajuciPredmeti = new ArrayList<>();
         List<Predmet> sviPredmeti = predmetRepository.getAllSubjects();
@@ -60,6 +60,7 @@ public class UpisService {
         return odgovarajuciPredmeti;
     }
 
+    @Transactional
     public List<Predmet> saveSubjectsForStudent(int anketaId, List<Predmet> izabraniPredmeti) throws RuntimeException {
         Optional<Anketa> anketaO = anketaRepository.findById(anketaId);
         if (!anketaO.isPresent()) {
