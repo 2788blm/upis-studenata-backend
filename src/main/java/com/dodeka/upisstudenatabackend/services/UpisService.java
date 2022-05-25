@@ -29,6 +29,19 @@ public class UpisService {
 
 
     @Transactional
+    public List<Predmet> getAvailableSubjects(String smer, int semestar) {
+        List<Predmet> odgovarajuciPredmeti = new ArrayList<>();
+        List<Predmet> sviPredmeti = predmetRepository.getAllSubjects();
+        for(Predmet predmet : sviPredmeti) {
+            boolean pass = true;
+            pass &= predmet.getSmer().getNaziv().equals(smer);
+            pass &= predmet.getSemestar()/2 <= semestar;
+            if(pass) odgovarajuciPredmeti.add(predmet);
+        }
+        return odgovarajuciPredmeti;
+    }
+
+    @Transactional
     public void addStudentInformations(AnketaDto anketaDto) {
         Student student = Student.builder()
                 .email(anketaDto.getEmail())
@@ -42,35 +55,11 @@ public class UpisService {
         Anketa anketa = Anketa.builder()
                 .student(student)
                 .godinaStudija(anketaDto.getGodinaStudija())
+                .predmeti(anketaDto.getPredmeti())
                 .build();
         studentRepository.save(student);
         anketaRepository.save(anketa);
     }
 
-    @Transactional
-    public List<Predmet> returnAvailableSubjects(AnketaDto anketaDto) {
-        List<Predmet> odgovarajuciPredmeti = new ArrayList<>();
-        List<Predmet> sviPredmeti = predmetRepository.getAllSubjects();
-        for(Predmet predmet : sviPredmeti) {
-            boolean pass = true;
-            pass &= predmet.getSmer() == anketaDto.getSmer();
-            pass &= predmet.getSemestar()/2 <= anketaDto.getGodinaStudija();
-            if(pass) odgovarajuciPredmeti.add(predmet);
-        }
-        return odgovarajuciPredmeti;
-    }
-
-    @Transactional
-    public List<Predmet> saveSubjectsForStudent(int anketaId, List<Predmet> izabraniPredmeti) throws RuntimeException {
-        Optional<Anketa> anketaO = anketaRepository.findById(anketaId);
-        if (!anketaO.isPresent()) {
-            throw new RuntimeException("Anketa does not exist:" + anketaId);
-        }
-        Anketa anketaDB = anketaO.get();
-        anketaDB.getPredmeti().addAll(izabraniPredmeti);
-        anketaRepository.save(anketaDB);
-
-        return izabraniPredmeti;
-    }
 
 }

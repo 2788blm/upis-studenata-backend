@@ -17,7 +17,7 @@ public class Student {
 
     private String prezime;
 
-    @Enumerated(EnumType.STRING)
+    @ManyToOne
     private Smer smer;
 
     private int brojIndeksa;

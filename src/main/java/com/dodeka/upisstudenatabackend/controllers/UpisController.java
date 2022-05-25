@@ -3,6 +3,7 @@ package com.dodeka.upisstudenatabackend.controllers;
 import com.dodeka.upisstudenatabackend.domain.Predmet;
 import com.dodeka.upisstudenatabackend.dto.AnketaDto;
 import com.dodeka.upisstudenatabackend.services.UpisService;
+import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,29 +20,20 @@ public class UpisController {
     UpisService upisService;
 
 
-    @PostMapping
-    public List<Predmet> addStudentInformations(@RequestBody AnketaDto anketaDto){
-            upisService.addStudentInformations(anketaDto);
-            return upisService.returnAvailableSubjects(anketaDto);
-    }
-
-
-    /* Kako da znam koji student je odabrao predmete?
-    * Da li da trazim id zadnje ankete u bazi odmah nakon unosenja podataka sa fronta,
-    * ili da prosledim email studenta pa da onda trazim poslednju anketu,
-    * ili na neki treci nacin?
-    * */
-
-
-    @PutMapping("{anketaId}")
-    public @ResponseBody ResponseEntity<Object> addSubjectsForStudent(@PathVariable int anketaId, @RequestBody List<Predmet> izabraniPredmeti) {    // zasto uopste vracam bilo sta?
+    @GetMapping("/vratiOdgovarajuceIspite")
+    public ResponseEntity<Object> getAvailableSubjects(@RequestParam(name = "smer") String smer,
+                                                        @RequestParam(name = "semestar") int semestar) {
         try {
-            return ResponseEntity.status(HttpStatus.OK).body(upisService.saveSubjectsForStudent(anketaId, izabraniPredmeti));
-        } catch (RuntimeException ex) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
+            return ResponseEntity.status(HttpStatus.OK).body(upisService.getAvailableSubjects(smer, semestar)); // godina?
+        } catch (Exception ex) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
         }
     }
 
+    @PostMapping("/unesiPodatkeIzAnkete")
+    public void addStudentInformations(@RequestBody AnketaDto anketaDto){
+        upisService.addStudentInformations(anketaDto);
+    }
 
 
 }

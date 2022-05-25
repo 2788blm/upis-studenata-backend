@@ -29,10 +29,12 @@ public class Anketa {
     @ManyToMany
     private List<Predmet> predmeti;
 
-    public void setEspb() {
+    {
         espb = 0;
         for (Predmet predmet : predmeti) {
             espb += predmet.getEspb();
         }
     }
+
+
 }
