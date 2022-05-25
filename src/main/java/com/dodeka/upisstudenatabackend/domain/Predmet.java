@@ -22,7 +22,7 @@ public class Predmet {
     @ManyToOne
     private SkolskaGodina skolskaGodina;
 
-    @Enumerated(EnumType.STRING)
+    @ManyToOne
     private Smer smer;
 
     private String naziv;
