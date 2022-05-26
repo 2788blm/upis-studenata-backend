@@ -2,6 +2,7 @@ package com.dodeka.upisstudenatabackend.controllers;
 
 import com.dodeka.upisstudenatabackend.dto.UserDto;
 import com.dodeka.upisstudenatabackend.services.UserService;
+import jakarta.validation.Valid;
 import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -9,15 +10,15 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/user")
-public class UserController {
+@RequestMapping("/users")
+public class UsersController {
 
     @Autowired
     UserService userService;
 
 
     @PostMapping("/createUser")
-    public ResponseEntity<Object> createUser(@RequestBody UserDto userDto){
+    public ResponseEntity<Object> createUser(@RequestBody @Valid UserDto userDto){
         try {
             return ResponseEntity.status(HttpStatus.OK).body(userService.createUser(userDto));
         } catch (Exception ex) {

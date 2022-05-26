@@ -24,7 +24,7 @@ public class UserService {
         User user = User.builder()
                 .email(userDto.getEmail())
                 .password(userDto.getPassword())
-                .role(userDto.getRole())
+                .roles(userDto.getRoles())
                 .active(true)
                 .build();
         return UserDto.userToDto(userRepository.save(user));
@@ -40,7 +40,7 @@ public class UserService {
         updatedUser.setUsername(userDto.getUsername());
         updatedUser.setPassword(userDto.getPassword());
         updatedUser.setEmail(userDto.getEmail());
-        updatedUser.setRole(userDto.getRole());
+        updatedUser.setRoles(userDto.getRoles());
         updatedUser.setActive(userDto.isActive());
         return UserDto.userToDto(userRepository.save(updatedUser));
     }

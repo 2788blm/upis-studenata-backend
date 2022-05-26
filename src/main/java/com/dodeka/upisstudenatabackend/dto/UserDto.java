@@ -1,10 +1,10 @@
 package com.dodeka.upisstudenatabackend.dto;
 
-import com.dodeka.upisstudenatabackend.domain.Role;
 import com.dodeka.upisstudenatabackend.domain.User;
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+
+import java.util.Set;
 
 @Data
 @Builder
@@ -16,7 +16,7 @@ public class UserDto {
 
     private String password;
 
-    private Role role;
+    private Set<String> roles;
 
     private boolean active;
 
@@ -26,7 +26,7 @@ public class UserDto {
                 .email(user.getEmail())
                 .username(user.getUsername())
                 .password(user.getPassword())
-                .role(user.getRole())
+                .roles(user.getRoles())
                 .active(user.isActive())
                 .build();
     }
