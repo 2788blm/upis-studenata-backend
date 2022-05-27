@@ -1,6 +1,6 @@
 package com.dodeka.upisstudenatabackend.controllers;
 
-import com.dodeka.upisstudenatabackend.dto.UserDto;
+import com.dodeka.upisstudenatabackend.domain.User;
 import com.dodeka.upisstudenatabackend.services.UserService;
 import jakarta.validation.Valid;
 import javassist.NotFoundException;
@@ -18,18 +18,18 @@ public class UsersController {
 
 
     @PostMapping("/createUser")
-    public ResponseEntity<Object> createUser(@RequestBody @Valid UserDto userDto){
+    public ResponseEntity<Object> createUser(@RequestBody @Valid User user){
         try {
-            return ResponseEntity.status(HttpStatus.OK).body(userService.createUser(userDto));
+            return ResponseEntity.status(HttpStatus.OK).body(userService.createUser(user));
         } catch (Exception ex) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
         }
     }
 
     @PutMapping("/updateUser/{email}")
-    public ResponseEntity<Object> updateUser(@RequestBody UserDto userDto) {
+    public ResponseEntity<Object> updateUser(@RequestBody User user) {
         try {
-            return ResponseEntity.status(HttpStatus.OK).body(userService.updateUser(userDto));
+            return ResponseEntity.status(HttpStatus.OK).body(userService.updateUser(user));
         } catch (NotFoundException ex) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
         }
