@@ -18,4 +18,6 @@ public class SkolskaGodina {
 
     @OneToMany(mappedBy = "predmet", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Predmet> predmeti;
+
+
 }

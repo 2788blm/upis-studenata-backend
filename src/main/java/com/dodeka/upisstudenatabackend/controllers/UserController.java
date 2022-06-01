@@ -1,20 +1,27 @@
 package com.dodeka.upisstudenatabackend.controllers;
 
 import com.dodeka.upisstudenatabackend.domain.User;
+import com.dodeka.upisstudenatabackend.dto.LoginRequest;
 import com.dodeka.upisstudenatabackend.services.UserService;
 import jakarta.validation.Valid;
 import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/users")
-public class UsersController {
+public class UserController {
 
     @Autowired
-    UserService userService;
+    private UserService userService;
+
+//    @Autowired
+//    private JwtUtil jwtUtil;
 
 
     @PostMapping("/createUser")
@@ -26,7 +33,7 @@ public class UsersController {
         }
     }
 
-    @PutMapping("/updateUser/{email}")
+    @PutMapping("/updateUser")
     public ResponseEntity<Object> updateUser(@RequestBody User user) {
         try {
             return ResponseEntity.status(HttpStatus.OK).body(userService.updateUser(user));
@@ -53,6 +60,22 @@ public class UsersController {
         }
     }
 
+    @GetMapping("/getAllUsers")
+    public List<User> listUsers() {
+        return userService.listUsers();
+    }
+
     // logovanje
+    @PostMapping("/login")
+    public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) {
+        try {
+            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
+        } catch(Exception ex) {
+            ex.printStackTrace();
+            return ResponseEntity.status(403).build();
+        }
+        return ResponseEntity.ok(new LoginResponse(jwtUtil.generateToken(loginRequest.getUsername())));
+    }
+
 
 }

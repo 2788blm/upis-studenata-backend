@@ -4,9 +4,18 @@ import com.dodeka.upisstudenatabackend.domain.User;
 import com.dodeka.upisstudenatabackend.repositories.UserRepository;
 import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.util.CollectionUtils;
+import org.springframework.http.HttpStatus;
+import org.springframework.util.StringUtils;
 
 @Service
 public class UserService {
@@ -14,27 +23,54 @@ public class UserService {
     @Autowired
     UserRepository userRepository;
 
+    protected final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+
+
 
     @Transactional
     public User createUser(User user) throws Exception {
-        if(userRepository.findById(user.getEmail()).isPresent()){
+        if(userRepository.findByEmail(user.getEmail()).isPresent()){
             throw new Exception("User with email = " + user.getEmail() + " already exists");
         }
+
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+
+        if (CollectionUtils.isEmpty(user.getRoles())) {
+            throw new RuntimeException("Roles cannot be empty");
+        }
+        if (user.getRoles().contains(User.ROLE_STUDENT) && (user.getRoles().contains(User.ROLE_SEKRETAR) || user.getRoles().contains(User.ROLE_ADMINISTRATOR_PREDMETA) || user.getRoles().contains(User.ROLE_ADMINISTRATOR_SISTEMA))) {
+            throw new RuntimeException("Student role cannot be assigned together with Sekretar, Administrator predmeta or Administrator sistema role.");
+        }
+
         return userRepository.save(user);
     }
 
     @Transactional
     public User updateUser(User user) throws NotFoundException {
-        Optional<User> userO = userRepository.findById(user.getEmail());
+        if (StringUtils.hasText(user.getUsername())) {
+            throw new RuntimeException("Name cannot be empty");
+        }
+        if (CollectionUtils.isEmpty(user.getRoles())) {
+            throw new RuntimeException("Roles cannot be empty");
+        }
+        if (StringUtils.hasText(user.getEmail())) {
+            throw new RuntimeException("Email cannot be empty");
+        }
+        if (user.getRoles().contains(User.ROLE_STUDENT) && (user.getRoles().contains(User.ROLE_SEKRETAR) || user.getRoles().contains(User.ROLE_ADMINISTRATOR_PREDMETA) || user.getRoles().contains(User.ROLE_ADMINISTRATOR_SISTEMA))) {
+            throw new RuntimeException("Student role cannot be assigned together with Sekretar, Administrator predmeta or Administrator sistema role.");
+        }
+        Optional<User> userO = userRepository.findByUsername(user.getUsername());
         if(!userO.isPresent()){
-            throw new NotFoundException("User with email = " + user.getEmail() + " doesn't exists");
+            throw new NotFoundException("User with username = " + user.getUsername() + " doesn't exists");
         }
         User updatedUser = userO.get();
         updatedUser.setUsername(user.getUsername());
-        updatedUser.setPassword(user.getPassword()); // ovo nece moci
         updatedUser.setEmail(user.getEmail());
         updatedUser.setRoles(user.getRoles());
         updatedUser.setActive(user.isActive());
+        if (!StringUtils.hasText(user.getPassword())) {
+            updatedUser.setPassword(passwordEncoder.encode(user.getPassword()));
+        }
         return userRepository.save(updatedUser);
     }
 
@@ -58,4 +94,8 @@ public class UserService {
     }
 
 
+    public List<User> listUsers() {
+        List<User> usersToList = new ArrayList<>(userRepository.findAll());
+        return usersToList;
+    }
 }
