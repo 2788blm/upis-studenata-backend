@@ -34,6 +34,10 @@ dependencies {
 
 	implementation 'org.liquibase:liquibase-core'
 	implementation group: 'jakarta.validation', name: 'jakarta.validation-api', version: '3.0.1'
+	annotationProcessor group: 'com.querydsl', name: 'querydsl-core', version: '5.0.0'
+	implementation group: 'com.querydsl', name: 'querydsl-jpa', version: '5.0.0'
+
+
 
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }

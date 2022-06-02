@@ -17,7 +17,7 @@ import java.util.List;
 public class SkolskaGodinaController {
 
     @Autowired
-    SkolskaGodinaService skolskaGodinaService;
+    private SkolskaGodinaService skolskaGodinaService;
 
 
     @GetMapping("/izlistajSkolskeGodine")
