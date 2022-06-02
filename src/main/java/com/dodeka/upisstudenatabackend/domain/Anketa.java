@@ -5,7 +5,7 @@ import lombok.Data;
 import org.hibernate.annotations.UpdateTimestamp;
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.List;
+import java.util.Set;
 
 @Entity
 @Data
@@ -27,7 +27,7 @@ public class Anketa {
     private int espb;
 
     @ManyToMany
-    private List<Predmet> predmeti;
+    private Set<Predmet> predmeti;
 
     {
         espb = 0;

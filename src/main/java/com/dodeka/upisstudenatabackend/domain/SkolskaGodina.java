@@ -1,5 +1,6 @@
 package com.dodeka.upisstudenatabackend.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Builder;
 import lombok.Data;
 import javax.persistence.CascadeType;
@@ -7,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Data
@@ -17,7 +19,7 @@ public class SkolskaGodina {
     private String godina;  // 2021/2022
 
     @OneToMany(mappedBy = "predmet", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Predmet> predmeti;
+    private Set<Predmet> predmeti;
 
 
 }

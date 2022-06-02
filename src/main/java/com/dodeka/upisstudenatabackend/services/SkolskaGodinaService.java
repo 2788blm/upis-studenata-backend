@@ -2,9 +2,11 @@ package com.dodeka.upisstudenatabackend.services;
 
 import com.dodeka.upisstudenatabackend.domain.SkolskaGodina;
 import com.dodeka.upisstudenatabackend.domain.User;
+import com.dodeka.upisstudenatabackend.dto.SkolskaGodinaDto;
 import com.dodeka.upisstudenatabackend.repositories.SkolskaGodinaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -17,19 +19,17 @@ public class SkolskaGodinaService {
     SkolskaGodinaRepository skolskaGodinaRepository;
 
 
-    public List<SkolskaGodina> getAll() {
+    public List<SkolskaGodinaDto> getAll() {
         List<SkolskaGodina> skolskeGodine = new ArrayList<>(skolskaGodinaRepository.findAll());
-
-//        sortiranje
-
-        return skolskeGodine;
+        List<SkolskaGodinaDto> skolskeGodineDto = new ArrayList<>();
+        for (SkolskaGodina skolskaGodina : skolskeGodine) {
+            skolskeGodineDto.add(new SkolskaGodinaDto(skolskaGodina.getGodina()));
+        }
+        Collections.sort(skolskeGodineDto);
+        return skolskeGodineDto;
     }
 
-//    private List<SkolskaGodina> sortSkolskeGodine(List<SkolskaGodina> skolskeGodine) {
-//        List<SkolskaGodina> sortiraneSkolskeGodine = new ArrayList<>();
-//
-//
-//        return sortiraneSkolskeGodine;
-//    }
-
+    public SkolskaGodina addSkolskaGodina(SkolskaGodina skolskaGodina) {
+        return skolskaGodinaRepository.save(skolskaGodina);
+    }
 }

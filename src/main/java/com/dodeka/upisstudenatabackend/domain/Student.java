@@ -3,7 +3,7 @@ package com.dodeka.upisstudenatabackend.domain;
 import lombok.Builder;
 import lombok.Data;
 import javax.persistence.*;
-import java.util.List;
+import java.util.Set;
 
 @Entity
 @Data
@@ -28,6 +28,6 @@ public class Student {
     private StudijskaGrupa studijskaGrupa;
 
     @OneToMany(mappedBy = "student", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Anketa> ankete;
+    private Set<Anketa> ankete;
 
 }
