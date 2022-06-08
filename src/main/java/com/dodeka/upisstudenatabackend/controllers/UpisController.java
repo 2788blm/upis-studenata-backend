@@ -17,7 +17,7 @@ import java.util.List;
 public class UpisController {
 
     @Autowired
-    UpisService upisService;
+    private UpisService upisService;
 
 
     @GetMapping("/vratiOdgovarajuceIspite")

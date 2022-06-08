@@ -65,17 +65,17 @@ public class UserController {
         return userService.listUsers();
     }
 
-    // logovanje
-    @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) {
-        try {
-            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
-        } catch(Exception ex) {
-            ex.printStackTrace();
-            return ResponseEntity.status(403).build();
-        }
-        return ResponseEntity.ok(new LoginResponse(jwtUtil.generateToken(loginRequest.getUsername())));
-    }
+//    // logovanje
+//    @PostMapping("/login")
+//    public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) {
+//        try {
+//            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
+//        } catch(Exception ex) {
+//            ex.printStackTrace();
+//            return ResponseEntity.status(403).build();
+//        }
+//        return ResponseEntity.ok(new LoginResponse(jwtUtil.generateToken(loginRequest.getUsername())));
+//    }
 
 
 }

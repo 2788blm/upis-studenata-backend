@@ -8,6 +8,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Set;
 
 @Data
 public class AnketaDto {
@@ -28,6 +29,6 @@ public class AnketaDto {
 
     private int godinaStudija;
 
-    private List<Predmet> predmeti;
+    private Set<Predmet> predmeti;
 
 }

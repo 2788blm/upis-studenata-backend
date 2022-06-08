@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -29,6 +30,7 @@ public class SkolskaGodinaService {
         return skolskeGodineDto;
     }
 
+    @Transactional
     public SkolskaGodina addSkolskaGodina(SkolskaGodina skolskaGodina) {
         return skolskaGodinaRepository.save(skolskaGodina);
     }
