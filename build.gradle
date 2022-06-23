@@ -36,6 +36,10 @@ dependencies {
 	implementation group: 'jakarta.validation', name: 'jakarta.validation-api', version: '3.0.1'
 	annotationProcessor group: 'com.querydsl', name: 'querydsl-core', version: '5.0.0'
 	implementation group: 'com.querydsl', name: 'querydsl-jpa', version: '5.0.0'
+	implementation group: 'org.springframework.boot', name: 'spring-boot-starter-jdbc', version: '2.7.0'
+	implementation group: 'mysql', name: 'mysql-connector-java', version: '8.0.29'
+
+
 
 
 

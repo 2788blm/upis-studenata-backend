@@ -10,6 +10,8 @@ import javax.persistence.*;
 @Entity
 @Data
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Predmet {
 
     @Id

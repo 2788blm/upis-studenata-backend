@@ -8,6 +8,7 @@ import com.dodeka.upisstudenatabackend.dto.SkolskaGodinaDto;
 import com.dodeka.upisstudenatabackend.services.PredmetService;
 import jakarta.validation.Valid;
 import javassist.NotFoundException;
+import liquibase.pro.packaged.N;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,8 +26,8 @@ public class PredmetController {
 
     @GetMapping("/izlistajPredmete")
     public List<Predmet> getAll(@RequestParam(value = "skolskaGodina") SkolskaGodina skolskaGodina,
-                                @RequestParam(value = "smer", required = true) Smer smer,
-                                @RequestParam(value = "deoNaziva", required = true) String deoNaziva) {
+                                @RequestParam(value = "smer", required = false) Smer smer,
+                                @RequestParam(value = "deoNaziva", required = false) String deoNaziva) {
         return predmetService.getAll(skolskaGodina, smer, deoNaziva);
     }
 
@@ -62,7 +63,9 @@ public class PredmetController {
         try {
             predmetService.deletePredmet(predmetId);
             return new ResponseEntity<>(predmetId, HttpStatus.OK);
-        } catch (Exception e) {
+        } catch (NotFoundException e) {
+            return new ResponseEntity<>(predmetId, HttpStatus.NOT_FOUND);
+        } catch (RuntimeException e) {
             return new ResponseEntity<>(predmetId, HttpStatus.BAD_REQUEST);
         }
     }

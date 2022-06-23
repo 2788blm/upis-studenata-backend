@@ -1,18 +1,14 @@
 package com.dodeka.upisstudenatabackend.services;
 
+import com.dodeka.upisstudenatabackend.domain.Anketa;
 import com.dodeka.upisstudenatabackend.domain.Predmet;
 import com.dodeka.upisstudenatabackend.domain.SkolskaGodina;
 import com.dodeka.upisstudenatabackend.domain.Smer;
-import com.dodeka.upisstudenatabackend.domain.User;
-import com.dodeka.upisstudenatabackend.dto.SkolskaGodinaDto;
+import com.dodeka.upisstudenatabackend.repositories.AnketaRepository;
 import com.dodeka.upisstudenatabackend.repositories.PredmetRepository;
-import com.fasterxml.jackson.databind.util.ArrayBuilders;
-import com.querydsl.core.BooleanBuilder;
 import javassist.NotFoundException;
-import liquibase.pro.packaged.L;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
 import javax.transaction.Transactional;
@@ -26,6 +22,8 @@ public class PredmetService {
     @Autowired
     private PredmetRepository predmetRepository;
 
+    @Autowired
+    private AnketaRepository anketaRepository;
 
     public List<Predmet> getAll(SkolskaGodina skolskaGodina, Smer smer, String deoNaziva) {
         List<Predmet> predmeti = new ArrayList<>();
@@ -78,11 +76,17 @@ public class PredmetService {
     }
 
     @Transactional
-    public void deletePredmet(int predmetId) throws Exception{
+    public void deletePredmet(int predmetId) throws NotFoundException, RuntimeException{
         // Treba da proverim da li se predmet nalazi u nekoj anketi ili grupi
         Optional<Predmet> predmetO = predmetRepository.findById(predmetId);
         if (!predmetO.isPresent())
             throw new NotFoundException("Predmet with id = " + predmetId + " doesn't exists");
+        List<Anketa> ankete = anketaRepository.findAll();
+        for(Anketa anketa : ankete) {
+            if(anketa.getPredmeti().contains(predmetO.get())){
+                throw new RuntimeException("Predmet je vezan za anketu!");
+            }
+        }
         predmetRepository.delete(predmetO.get());
     }
 }

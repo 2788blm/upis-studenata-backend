@@ -1,15 +1,12 @@
 package com.dodeka.upisstudenatabackend.services;
 
 import com.dodeka.upisstudenatabackend.domain.Anketa;
-import com.dodeka.upisstudenatabackend.domain.Predmet;
 import com.dodeka.upisstudenatabackend.repositories.AnketaRepository;
 import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.CollectionUtils;
-import org.springframework.util.StringUtils;
 
 import javax.transaction.Transactional;
-import java.util.Collections;
 import java.util.Optional;
 
 public class AnketaService {
