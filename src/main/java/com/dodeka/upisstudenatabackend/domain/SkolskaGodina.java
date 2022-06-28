@@ -23,7 +23,7 @@ public class SkolskaGodina {
     @Id
     private String godina;  // 2021/2022
 
-    @OneToMany(mappedBy = "predmet", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "skolskaGodina", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Predmet> predmeti;
 
 

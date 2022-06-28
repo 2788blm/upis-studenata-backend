@@ -1,0 +1,38 @@
+databaseChangeLog:
+  - changeSet:
+      id: smer
+      author: veljko
+      changes:
+        - createTable:
+            tableName: smer
+            columns:
+              - column:
+                  name: id
+                  type: int(19)
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: sifra
+                  type: varchar(36)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: naziv
+                  type: varchar(36)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: brGodinaStudija
+                  type: int(2)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: zvanje
+                  type: varchar(36)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: espb
+                  type: int(3)
+                  constraints:
+                    nullable: false

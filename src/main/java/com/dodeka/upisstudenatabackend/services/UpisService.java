@@ -29,7 +29,7 @@ public class UpisService {
 
     public List<Predmet> getAvailableSubjects(String smer, int semestar) {
         List<Predmet> odgovarajuciPredmeti = new ArrayList<>();
-        List<Predmet> sviPredmeti = predmetRepository.getAllSubjects();
+        List<Predmet> sviPredmeti = predmetRepository.findAll();
         for(Predmet predmet : sviPredmeti) {
             boolean pass = true;
             pass &= predmet.getSmer().getNaziv().equals(smer);
@@ -50,11 +50,7 @@ public class UpisService {
                 .godinaUpisa(anketaDto.getGodinaUpisa())
                 .studijskaGrupa(anketaDto.getStudijskaGrupa())
                 .build();
-        Anketa anketa = Anketa.builder()
-                .student(student)
-                .godinaStudija(anketaDto.getGodinaStudija())
-                .predmeti(anketaDto.getPredmeti())
-                .build();
+        Anketa anketa = new Anketa(student, anketaDto.getGodinaStudija(), anketaDto.getPredmeti());
         studentRepository.save(student);
         anketaRepository.save(anketa);
     }

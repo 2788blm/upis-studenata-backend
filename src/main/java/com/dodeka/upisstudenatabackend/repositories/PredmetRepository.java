@@ -10,5 +10,5 @@ import java.util.List;
 public interface PredmetRepository extends JpaRepository<Predmet, Integer> {
 
 
-    List<Predmet> getAllSubjects();
+    List<Predmet> findAll();
 }

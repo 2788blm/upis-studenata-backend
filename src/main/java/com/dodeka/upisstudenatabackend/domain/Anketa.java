@@ -11,9 +11,6 @@ import java.util.Set;
 
 @Entity
 @Data
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
 public class Anketa {
 
     @Id
@@ -33,12 +30,31 @@ public class Anketa {
     @ManyToMany
     private Set<Predmet> predmeti;
 
-    {
+    public Anketa(Student student, int godinaStudija, Set<Predmet> predmeti) {
+        this.student = student;
+        this.godinaStudija = godinaStudija;
+        this.predmeti = predmeti;
+        calculateEspb();
+    }
+
+
+    public void calculateEspb() {
         espb = 0;
-        for (Predmet predmet : predmeti) {
-            espb += predmet.getEspb();
+        if(predmeti != null || !predmeti.isEmpty()) {
+            for (Predmet predmet : predmeti) {
+                espb += predmet.getEspb();
+            }
         }
     }
+
+//    {
+//        espb = 0;
+//        if(predmeti != null || !predmeti.isEmpty()) {
+//            for (Predmet predmet : predmeti) {
+//                espb += predmet.getEspb();
+//            }
+//        }
+//    }
 
 
 }

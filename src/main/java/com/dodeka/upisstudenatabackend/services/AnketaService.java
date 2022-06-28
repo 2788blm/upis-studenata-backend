@@ -4,11 +4,13 @@ import com.dodeka.upisstudenatabackend.domain.Anketa;
 import com.dodeka.upisstudenatabackend.repositories.AnketaRepository;
 import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
 import javax.transaction.Transactional;
 import java.util.Optional;
 
+@Service
 public class AnketaService {
 
     @Autowired
