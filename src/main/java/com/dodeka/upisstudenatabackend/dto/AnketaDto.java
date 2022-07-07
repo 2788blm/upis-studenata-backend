@@ -21,7 +21,7 @@ public class AnketaDto {
 
     private Smer smer;
 
-    private int brojIndeksa;
+    private String brojIndeksa;
 
     private int godinaUpisa;
 

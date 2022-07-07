@@ -1,13 +1,19 @@
 package com.dodeka.upisstudenatabackend.services;
 
 import com.dodeka.upisstudenatabackend.domain.Anketa;
+import com.dodeka.upisstudenatabackend.domain.QAnketa;
+import com.dodeka.upisstudenatabackend.dto.AnketaFilter;
 import com.dodeka.upisstudenatabackend.repositories.AnketaRepository;
+import com.querydsl.core.BooleanBuilder;
+import com.querydsl.core.types.dsl.BooleanExpression;
 import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
 import javax.transaction.Transactional;
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Service
@@ -46,5 +52,33 @@ public class AnketaService {
         updatedAnketa.setPredmeti(anketa.getPredmeti());
 
         return anketaRepository.save(updatedAnketa);
+    }
+
+    public Slice<Anketa> getAll(String filterTekst, LocalDateTime datumOd, LocalDateTime datumDo, Integer pageNo, Integer pageSize, String sortOrder) {
+        BooleanBuilder predicate = new BooleanBuilder();
+        if (filterTekst != null) {
+            AnketaFilter anketaFilter = new AnketaFilter(filterTekst);
+            BooleanExpression email = QAnketa.anketa.student.email.eq(anketaFilter.getEmail());
+            BooleanExpression brojIndeksa = QAnketa.anketa.student.brojIndeksa.eq(anketaFilter.getBrojIndeksa());
+            BooleanExpression ime = QAnketa.anketa.student.ime.eq(anketaFilter.getIme());
+            BooleanExpression prezime = QAnketa.anketa.student.prezime.eq(anketaFilter.getPrezime());
+            BooleanExpression filter = email.or(brojIndeksa).or(ime).or(prezime);
+            predicate.and(filter);
+        }
+        if (datumOd != null) {
+            predicate.and(QAnketa.anketa.datum.after(datumOd));
+        }
+        if (datumDo != null) {
+            predicate.and(QAnketa.anketa.datum.before(datumDo));
+        }
+        Pageable pageRequest;
+        if(sortOrder.equals("desc")) {
+            pageRequest = PageRequest.of(pageNo, pageSize, Sort.by("datum").descending());
+        } else if(sortOrder.equals("asc")){
+            pageRequest = PageRequest.of(pageNo, pageSize, Sort.by("datum").ascending());
+        } else {
+            throw new RuntimeException("Niste uneli pravilan poredak za sortiranje!");
+        }
+        return anketaRepository.findAll(predicate, pageRequest);
     }
 }

@@ -25,7 +25,7 @@ public class Student {
     @ManyToOne
     private Smer smer;
 
-    private int brojIndeksa;
+    private String brojIndeksa;
 
     private int godinaUpisa;
 

@@ -1,12 +1,11 @@
 package com.dodeka.upisstudenatabackend.services;
 
-import com.dodeka.upisstudenatabackend.domain.Anketa;
-import com.dodeka.upisstudenatabackend.domain.Predmet;
-import com.dodeka.upisstudenatabackend.domain.SkolskaGodina;
-import com.dodeka.upisstudenatabackend.domain.Smer;
+import com.dodeka.upisstudenatabackend.domain.*;
 import com.dodeka.upisstudenatabackend.repositories.AnketaRepository;
 import com.dodeka.upisstudenatabackend.repositories.PredmetRepository;
+import com.querydsl.core.BooleanBuilder;
 import javassist.NotFoundException;
+import liquibase.pro.packaged.Q;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -26,10 +25,18 @@ public class PredmetService {
     private AnketaRepository anketaRepository;
 
     public List<Predmet> getAll(SkolskaGodina skolskaGodina, Smer smer, String deoNaziva) {
+        BooleanBuilder predicate = new BooleanBuilder();
+        if (skolskaGodina != null && skolskaGodina.getGodina() != null) {
+            predicate.and(QPredmet.predmet.skolskaGodina.godina.eq(skolskaGodina.getGodina()));
+        }
+        if (smer != null && smer.getId() != null) {
+            predicate.and(QPredmet.predmet.smer.id.eq(smer.getId()));
+        }
+        if (StringUtils.hasText(deoNaziva)) {
+            predicate.and(QPredmet.predmet.naziv.contains(deoNaziva));
+        }
         List<Predmet> predmeti = new ArrayList<>();
-
-        // kako pretraziti po ovim parametrima, querydsl?
-
+        predmetRepository.findAll(predicate).forEach(predmeti::add);
         return predmeti;
     }
 
