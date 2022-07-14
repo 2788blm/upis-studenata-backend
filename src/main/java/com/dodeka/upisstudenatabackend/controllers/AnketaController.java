@@ -29,7 +29,7 @@ public class AnketaController {
         return new ResponseEntity<Slice<Anketa>>(anketaService.getAll(filterTekst, datumOd, datumDo, pageNo, pageSize, sortOrder), new HttpHeaders(), HttpStatus.OK);
     }
 
-    @GetMapping("/getAnketaById/{id}")
+    @GetMapping("/anketa/{id}")
     public ResponseEntity<Object> getAnketaById(@PathVariable int anketaId) {
         try {
             return ResponseEntity.status(HttpStatus.OK).body(anketaService.getAnketaById(anketaId));
@@ -38,7 +38,7 @@ public class AnketaController {
         }
     }
 
-    @PutMapping("/updateAnketa")
+    @PutMapping("/izmeniAnketu")
     public ResponseEntity<Object> updateAnketa(@RequestBody Anketa anketa) {
         try {
             return ResponseEntity.status(HttpStatus.OK).body(anketaService.updateAnketa(anketa));

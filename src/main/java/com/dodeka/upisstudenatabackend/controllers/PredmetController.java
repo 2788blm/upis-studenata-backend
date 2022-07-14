@@ -40,7 +40,7 @@ public class PredmetController {
         }
     }
 
-    @GetMapping("/getPredmetById/{id}")
+    @GetMapping("/predmet/{id}")
     public ResponseEntity<Object> getPredmetById(@PathVariable int predmetId) {
         try {
             return ResponseEntity.status(HttpStatus.OK).body(predmetService.getPredmetById(predmetId));
@@ -49,7 +49,7 @@ public class PredmetController {
         }
     }
 
-    @PutMapping("/updatePredmet")
+    @PutMapping("/izmeniPredmet")
     public ResponseEntity<Object> updatePredmet(@RequestBody Predmet predmet) {
         try {
             return ResponseEntity.status(HttpStatus.OK).body(predmetService.updatePredmet(predmet));
@@ -58,7 +58,7 @@ public class PredmetController {
         }
     }
 
-    @DeleteMapping("/deletePredmetById/{id}")
+    @DeleteMapping("/obrisiPredmet/{id}")
     public ResponseEntity<Integer> deletePredmet(@PathVariable int predmetId){
         try {
             predmetService.deletePredmet(predmetId);
