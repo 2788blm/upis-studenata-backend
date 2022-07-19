@@ -5,6 +5,7 @@ import com.dodeka.upisstudenatabackend.dto.StudentReportDto;
 import com.dodeka.upisstudenatabackend.repositories.AnketaRepository;
 import com.dodeka.upisstudenatabackend.repositories.PredmetRepository;
 import com.querydsl.core.BooleanBuilder;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,7 +26,7 @@ public class ReportService {
     @Autowired
     PredmetRepository predmetRepository;
 
-    public Object getStudentsBySubjectReport(int predmetId, String format) {
+    public XSSFWorkbook getStudentsBySubjectReport(int predmetId, String format) {
         // Retrieve data
         String[] columns = {"Broj indeksa", "Ime", "Prezime", "E-mail"};
         Predmet  predmet = predmetRepository.getById(predmetId);
@@ -49,7 +50,7 @@ public class ReportService {
         } else if(format.equals("csv")) {
             exportReport = new ExportReportToCSV();
         } else {
-            return new RuntimeException("Format moze biti \"xslx\" ili \"csv\"");
+            throw new RuntimeException("Format moze biti \"xslx\" ili \"csv\"");
         }
         // Export to chosen format
        return exportReport.exportStudentsBySubjectReport(columns, studenti, "Studenti koji slusaju " + predmet.getNaziv());

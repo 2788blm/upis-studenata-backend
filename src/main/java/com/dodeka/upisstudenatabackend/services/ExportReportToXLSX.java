@@ -10,7 +10,7 @@ import java.util.List;
 public class ExportReportToXLSX implements ExportReport {
 
     @Override
-    public Object exportStudentsBySubjectReport(String[] columns, List<StudentReportDto> data, String name) {
+    public XSSFWorkbook exportStudentsBySubjectReport(String[] columns, List<StudentReportDto> data, String name) {
 
         XSSFWorkbook workbook = new XSSFWorkbook();
         Sheet sheet = workbook.createSheet(name);
@@ -45,6 +45,7 @@ public class ExportReportToXLSX implements ExportReport {
             sheet.autoSizeColumn(i);
         }
 
-        return sheet;
+//        return sheet;
+        return workbook;
     }
 }

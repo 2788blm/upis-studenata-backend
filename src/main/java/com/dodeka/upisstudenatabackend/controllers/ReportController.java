@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 @RestController
 @RequestMapping("/izvestaji")
@@ -23,13 +24,14 @@ public class ReportController {
     ReportService reportService;
 
     @GetMapping("/listaStudenataPoPredmetu")
-    public ResponseEntity<Object> getStudentsBySubjectReport(@RequestParam(value = "predmetId") int predmetId,
-                                         @RequestParam(value = "smer", required = false, defaultValue = "xlsx") String format) {
-        try {
-            return ResponseEntity.status(HttpStatus.OK).body(reportService.getStudentsBySubjectReport(predmetId, format));
-        } catch (RuntimeException ex) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
-        }
+    public void getStudentsBySubjectReport(@RequestParam(value = "response") HttpServletResponse response,
+                                            @RequestParam(value = "predmetId") int predmetId,
+                                         @RequestParam(value = "smer", required = false, defaultValue = "xlsx") String format) throws IOException {
+            XSSFWorkbook wb = reportService.getStudentsBySubjectReport(predmetId, format);
+            response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+            response.setHeader("Naziv fajla", wb.getSheetName(0));
+            wb.write(response.getOutputStream());
+            wb.close();
     }
 
 }
