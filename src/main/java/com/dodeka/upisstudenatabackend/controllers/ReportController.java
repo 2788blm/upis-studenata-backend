@@ -24,14 +24,17 @@ public class ReportController {
     ReportService reportService;
 
     @GetMapping("/listaStudenataPoPredmetu")
-    public void getStudentsBySubjectReport(@RequestParam(value = "response") HttpServletResponse response,
+    public ResponseEntity<Object> getStudentsBySubjectReport(@RequestParam(value = "response") HttpServletResponse response,
                                             @RequestParam(value = "predmetId") int predmetId,
                                          @RequestParam(value = "smer", required = false, defaultValue = "xlsx") String format) throws IOException {
-            XSSFWorkbook wb = reportService.getStudentsBySubjectReport(predmetId, format);
-            response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
-            response.setHeader("Naziv fajla", wb.getSheetName(0));
-            wb.write(response.getOutputStream());
-            wb.close();
+        try {
+            reportService.getStudentsBySubjectReport(response, predmetId, format);
+            return ResponseEntity.status(HttpStatus.OK).build();
+        } catch (RuntimeException ex) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
+        } catch (IOException ex) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ex.getMessage());
+        }
     }
 
 }

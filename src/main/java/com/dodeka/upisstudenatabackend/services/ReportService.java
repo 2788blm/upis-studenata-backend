@@ -12,6 +12,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,7 +28,7 @@ public class ReportService {
     @Autowired
     PredmetRepository predmetRepository;
 
-    public XSSFWorkbook getStudentsBySubjectReport(int predmetId, String format) {
+    public void getStudentsBySubjectReport(HttpServletResponse response, int predmetId, String format) throws IOException {
         // Retrieve data
         String[] columns = {"Broj indeksa", "Ime", "Prezime", "E-mail"};
         Predmet  predmet = predmetRepository.getById(predmetId);
@@ -45,15 +47,15 @@ public class ReportService {
             studenti.add(studentReportDto);
         }
         // Choose format
-        if(format.equals("xslx")) {
+        if(format.equals("xlsx")) {
             exportReport = new ExportReportToXLSX();
         } else if(format.equals("csv")) {
             exportReport = new ExportReportToCSV();
         } else {
-            throw new RuntimeException("Format moze biti \"xslx\" ili \"csv\"");
+            throw new RuntimeException("Format moze biti \"xlsx\" ili \"csv\"");
         }
         // Export to chosen format
-       return exportReport.exportStudentsBySubjectReport(columns, studenti, "Studenti koji slusaju " + predmet.getNaziv());
+       exportReport.exportStudentsBySubjectReport(response, columns, studenti, "Studenti koji slusaju " + predmet.getNaziv());
     }
 
 }

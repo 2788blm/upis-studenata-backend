@@ -5,12 +5,14 @@ import com.dodeka.upisstudenatabackend.dto.StudentReportDto;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.List;
 
 public class ExportReportToXLSX implements ExportReport {
 
     @Override
-    public XSSFWorkbook exportStudentsBySubjectReport(String[] columns, List<StudentReportDto> data, String name) {
+    public void exportStudentsBySubjectReport(HttpServletResponse response, String[] columns, List<StudentReportDto> data, String name) throws IOException {
 
         XSSFWorkbook workbook = new XSSFWorkbook();
         Sheet sheet = workbook.createSheet(name);
@@ -45,7 +47,10 @@ public class ExportReportToXLSX implements ExportReport {
             sheet.autoSizeColumn(i);
         }
 
-//        return sheet;
-        return workbook;
+        response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+        response.setHeader("Naziv fajla", name);
+        workbook.write(response.getOutputStream());
+        workbook.close();
+
     }
 }
