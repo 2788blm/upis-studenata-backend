@@ -54,7 +54,13 @@ dependencies {
 
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
+	// for xlsx report
 	implementation group: 'org.apache.poi', name: 'poi-ooxml', version: '5.2.2'
+
+	// for csv report
+	implementation group: 'org.apache.commons', name: 'commons-csv', version: '1.9.0'
+
+
 
 }
 
