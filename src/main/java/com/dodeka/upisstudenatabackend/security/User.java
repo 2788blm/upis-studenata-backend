@@ -57,11 +57,10 @@ public class User {
     private String accessToken;
 
 
+
     public boolean hasRole(String role) {
         return roles != null && roles.contains(role);
     }
-
-
 
     @JsonIgnore
     public Collection<? extends GrantedAuthority> getAuthorities() {
