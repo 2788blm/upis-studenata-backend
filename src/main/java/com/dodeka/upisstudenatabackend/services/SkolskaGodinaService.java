@@ -15,7 +15,7 @@ import java.util.List;
 public class SkolskaGodinaService {
 
     @Autowired
-    SkolskaGodinaRepository skolskaGodinaRepository;
+    private SkolskaGodinaRepository skolskaGodinaRepository;
 
 
     public List<SkolskaGodinaDto> getAll() {

@@ -18,13 +18,13 @@ import java.util.List;
 public class UpisService {
 
     @Autowired
-    StudentRepository studentRepository;
+    private StudentRepository studentRepository;
 
     @Autowired
-    AnketaRepository anketaRepository;
+    private AnketaRepository anketaRepository;
 
     @Autowired
-    PredmetRepository predmetRepository;
+    private PredmetRepository predmetRepository;
 
 
     public List<Predmet> getAvailableSubjects(String smer, int semestar) {

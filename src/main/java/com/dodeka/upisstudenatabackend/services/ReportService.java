@@ -23,10 +23,10 @@ public class ReportService {
     ExportReport exportReport;
 
     @Autowired
-    AnketaRepository anketaRepository;
+    private AnketaRepository anketaRepository;
 
     @Autowired
-    PredmetRepository predmetRepository;
+    private PredmetRepository predmetRepository;
 
     public void getStudentsBySubjectReport(HttpServletResponse response, int predmetId, String format) throws IOException {
         // Retrieve data

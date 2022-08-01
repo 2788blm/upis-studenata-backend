@@ -1,7 +1,6 @@
 package com.dodeka.upisstudenatabackend.controllers;
 
 import com.dodeka.upisstudenatabackend.domain.SkolskaGodina;
-import com.dodeka.upisstudenatabackend.domain.User;
 import com.dodeka.upisstudenatabackend.dto.SkolskaGodinaDto;
 import com.dodeka.upisstudenatabackend.services.SkolskaGodinaService;
 import jakarta.validation.Valid;

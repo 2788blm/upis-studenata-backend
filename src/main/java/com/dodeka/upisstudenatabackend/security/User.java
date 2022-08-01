@@ -1,4 +1,4 @@
-package com.dodeka.upisstudenatabackend.domain;
+package com.dodeka.upisstudenatabackend.security;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -41,7 +41,7 @@ public class User {
 
     @Column
     @NotBlank(message = "password is mandatory")
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)  // da li ce security moci da odradi posao ako je ovo ovako?
     private String password;
 
 

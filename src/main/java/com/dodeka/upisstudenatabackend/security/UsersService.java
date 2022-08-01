@@ -1,9 +1,12 @@
-package com.dodeka.upisstudenatabackend.services;
+package com.dodeka.upisstudenatabackend.security;
 
-import com.dodeka.upisstudenatabackend.domain.User;
+import com.dodeka.upisstudenatabackend.security.User;
 import com.dodeka.upisstudenatabackend.repositories.UserRepository;
 import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -11,18 +14,19 @@ import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
 import javax.transaction.Transactional;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
-public class UserService {
+public class UsersService implements UserDetailsService {
 
-    @Autowired
-    UserRepository userRepository;
+    private UserRepository userRepository;
 
     protected final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
+    @Autowired
+    public UsersService(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 
 
     @Transactional
@@ -93,7 +97,18 @@ public class UserService {
 
 
     public List<User> listUsers() {
-        List<User> usersToList = new ArrayList<>(userRepository.findAll());
-        return usersToList;
+        return new ArrayList<>(userRepository.findAll());
     }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        Optional<User> userO = userRepository.findByUsername(username);
+        if(!userO.isPresent()) {
+            throw new UsernameNotFoundException("User name " + username + "not found");
+        }
+        User user = userO.get();
+        return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), user.getAuthorities());
+    }
+
+
 }

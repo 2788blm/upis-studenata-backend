@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDateTime;
 
 @RestController
-@RequestMapping("/upis")
+@RequestMapping("/ankete")
 public class AnketaController {
 
     @Autowired

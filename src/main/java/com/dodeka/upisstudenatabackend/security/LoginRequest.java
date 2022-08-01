@@ -1,4 +1,4 @@
-package com.dodeka.upisstudenatabackend.dto;
+package com.dodeka.upisstudenatabackend.security;
 
 
 import lombok.Data;
