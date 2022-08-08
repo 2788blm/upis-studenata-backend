@@ -209,6 +209,53 @@ databaseChangeLog:
                   constraints:
                     nullable: false
   - changeSet:
+      id: create_table_user
+      author: veljko
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            tableExists:
+              tableName: user
+      changes:
+        - createTable:
+            tableName: user
+            columns:
+              - column:
+                  name: user_id
+                  type: varchar(255)
+                  #                  type: bigint(20)
+                  constraints:
+                    primaryKey: true
+                    autoIncrement: true
+              - column:
+                  name: email
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: username
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: password
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: roles
+                  type: varchar(255)
+                  constraints:
+#                    nullable: false
+              - column:
+                  name: active
+                  type: boolean
+                  constraints:
+                    nullable: false
+
+
+
+  - changeSet:
       id: add_foreign_key_constraints_for_table_skolska_godina
       author: veljko
       changes:
@@ -216,10 +263,10 @@ databaseChangeLog:
             tableName: skolska_godina
             columns:
               - column:
-                  name: predmet_id
+                  name: skolska_godina_fk_predmet_id
                   type: int(10)
         - addForeignKeyConstraint:
-            baseColumnNames: predmet_id
+            baseColumnNames: skolska_godina_fk_predmet_id
             baseTableName: skolska_godina
             constraintName: skolska_godina_predmet
             referencedColumnNames: id
@@ -257,10 +304,10 @@ databaseChangeLog:
             tableName: studijska_grupa
             columns:
               - column:
-                  name: skolska_godina_id
+                  name: studijska_grupa_fk_skolska_godina
                   type: varchar(9)
         - addForeignKeyConstraint:
-            baseColumnNames: skolska_godina_id
+            baseColumnNames: studijska_grupa_fk_skolska_godina
             baseTableName: studijska_grupa
             constraintName: studijska_grupa_skolska_godina
             referencedColumnNames: godina
@@ -273,28 +320,28 @@ databaseChangeLog:
             tableName: student
             columns:
               - column:
-                  name: smerid
+                  name: student_fk_smer_id
                   type: int(10)
               - column:
-                  name: studijska_grupa_id
+                  name: student_fk_studijska_grupa_id
                   type: int(10)
               - column:
-                  name: anketa_id
+                  name: student_fk_anketa_id
                   type: int(10)
         - addForeignKeyConstraint:
-            baseColumnNames: smerid
+            baseColumnNames: student_fk_smer_id
             baseTableName: student
             constraintName: student_smer
             referencedColumnNames: id
             referencedTableName: smer
         - addForeignKeyConstraint:
-            baseColumnNames: studijska_grupa_id
+            baseColumnNames: student_fk_studijska_grupa_id
             baseTableName: student
             constraintName: student_studijska_grupa
             referencedColumnNames: id
             referencedTableName: studijska_grupa
         - addForeignKeyConstraint:
-            baseColumnNames: anketa_id
+            baseColumnNames: student_fk_anketa_id
             baseTableName: student
             constraintName: student_anketa
             referencedColumnNames: id
@@ -307,62 +354,20 @@ databaseChangeLog:
             tableName: anketa
             columns:
               - column:
-                  name: student_id
+                  name: anketa_fk_student_id
                   type: varchar(255)
               - column:
-                  name: predmet_id
+                  name: anketa_fk_predmet_id
                   type: int(10)
         - addForeignKeyConstraint:
-            baseColumnNames: student_id
+            baseColumnNames: anketa_fk_student_id
             baseTableName: anketa
             constraintName: anketa_student
             referencedColumnNames: email
             referencedTableName: student
         - addForeignKeyConstraint:
-            baseColumnNames: predmet_id
+            baseColumnNames: anketa_fk_predmet_id
             baseTableName: anketa
             constraintName: anketa_predmet
             referencedColumnNames: id
             referencedTableName: predmet
-  - changeSet:
-      id: create_table_user
-      author: veljko
-      preConditions:
-        - onFail: MARK_RAN
-          not:
-            tableExists:
-              tableName: user
-      changes:
-        - createTable:
-            tableName: user
-            columns:
-              - column:
-                  name: userId
-                  type: bigint(20)
-                  constraints:
-                    primaryKey: true
-              - column:
-                  name: email
-                  type: varchar(255)
-                  constraints:
-                    nullable: false
-              - column:
-                  name: username
-                  type: varchar(255)
-                  constraints:
-                    nullable: false
-              - column:
-                  name: password
-                  type: varchar(255)
-                  constraints:
-                    nullable: false
-              - column:
-                  name: roles
-                  type: varchar(255)
-                  constraints:
-                    nullable: false
-              - column:
-                  name: active
-                  type: boolean
-                  constraints:
-                    nullable: false

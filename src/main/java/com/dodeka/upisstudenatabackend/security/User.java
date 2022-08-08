@@ -9,6 +9,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.GenericGenerator;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
@@ -25,30 +26,35 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class User {
 
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+//    @Column(name = "user_id")
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long userId;
+    @GeneratedValue(generator = "uuid2")
+    @GenericGenerator(name = "uuid2", strategy = "uuid2")
+    @Column(name = "user_id", columnDefinition = "varchar(36)")
+    private String userId;
 
 
-    @Column(unique = true, nullable = false)
+    @Column(name = "email", unique = true, nullable = false)
     @NotNull
     @Email
     private String email;
 
 
-    @Column(unique = true, nullable = false)
+    @Column(name = "username", unique = true, nullable = false)
     private String username;
 
-    @Column
+    @Column(name = "password")
     @NotBlank(message = "password is mandatory")
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)  // da li ce security moci da odradi posao ako je ovo ovako?
     private String password;
 
-
+    @Column(name = "roles")
     @ElementCollection(fetch = FetchType.EAGER)
     private Set<String> roles;
 
-
+    @Column(name = "active")
     @Builder.Default
     private boolean active = true;
 
