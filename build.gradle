@@ -23,13 +23,22 @@ repositories {
 	mavenCentral()
 }
 
+application {
+	mainClass = 'com.dodeka.upisstudenatabackend.UpisStudenataBackendApplication'
+}
+
+springBoot {
+//	mainClass.set("com.dodeka.upisstudenatabackend.UpisStudenataBackendApplication")
+	mainClass = 'com.dodeka.upisstudenatabackend.UpisStudenataBackendApplication'
+}
+
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 
 	// security
-	implementation group: 'org.springframework.boot', name: 'spring-boot-starter-security', version: '2.7.0'
-	implementation group: 'io.jsonwebtoken', name: 'jjwt', version: '0.9.1'
+//	implementation group: 'org.springframework.boot', name: 'spring-boot-starter-security', version: '2.7.0'
+//	implementation group: 'io.jsonwebtoken', name: 'jjwt', version: '0.9.1'
 
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'

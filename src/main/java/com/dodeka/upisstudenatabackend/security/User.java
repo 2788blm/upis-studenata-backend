@@ -10,8 +10,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
+//import org.springframework.security.core.GrantedAuthority;
+//import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import javax.persistence.*;
 import java.util.Collection;
@@ -68,11 +68,11 @@ public class User {
         return roles != null && roles.contains(role);
     }
 
-    @JsonIgnore
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        if (roles == null) return Collections.singleton(new SimpleGrantedAuthority("UNCONFIRMED"));
-        return roles.stream().map(SimpleGrantedAuthority::new).collect(Collectors.toList());
-    }
+//    @JsonIgnore
+//    public Collection<? extends GrantedAuthority> getAuthorities() {
+//        if (roles == null) return Collections.singleton(new SimpleGrantedAuthority("UNCONFIRMED"));
+//        return roles.stream().map(SimpleGrantedAuthority::new).collect(Collectors.toList());
+//    }
 
 
 

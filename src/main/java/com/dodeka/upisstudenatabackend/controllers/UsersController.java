@@ -6,8 +6,8 @@ import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+//import org.springframework.security.authentication.AuthenticationManager;
+//import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,15 +18,15 @@ public class UsersController {
 
     private UsersService usersService;
 
-    private AuthenticationManager authenticationManager;
+//    private AuthenticationManager authenticationManager;
 
-    private JwtUtil jwtUtil;
+//    private JwtUtil jwtUtil;
 
     @Autowired
-    public UsersController(UsersService usersService, AuthenticationManager authenticationManager, JwtUtil jwtUtil) {
+    public UsersController(UsersService usersService/*, AuthenticationManager authenticationManager, JwtUtil jwtUtil*/) {
         this.usersService = usersService;
-        this.authenticationManager = authenticationManager;
-        this.jwtUtil = jwtUtil;
+//        this.authenticationManager = authenticationManager;
+//        this.jwtUtil = jwtUtil;
     }
 
 
@@ -57,7 +57,7 @@ public class UsersController {
         }
     }
 
-    @GetMapping("/getUserByEmail/{email}")
+    @GetMapping("/getByEmail/{email}")
     public ResponseEntity<Object> getUserByEmail(@PathVariable String email) {
         try {
             return ResponseEntity.status(HttpStatus.OK).body(usersService.getUserByEmail(email));
@@ -66,23 +66,23 @@ public class UsersController {
         }
     }
 
-    @GetMapping("/getAllUsers")
+    @GetMapping("/getAll")
     public List<User> listUsers() {
         return usersService.listUsers();
     }
 
 
-    @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) {
-        try {
-            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getUsername(),
-                                                                                        loginRequest.getPassword()));
-        } catch(Exception ex) {
-            ex.printStackTrace();
-            return ResponseEntity.status(403).build();
-        }
-        return ResponseEntity.ok(new LoginResponse(jwtUtil.generateToken(loginRequest.getUsername())));
-    }
+//    @PostMapping("/login")
+//    public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) {
+//        try {
+//            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getUsername(),
+//                                                                                        loginRequest.getPassword()));
+//        } catch(Exception ex) {
+//            ex.printStackTrace();
+//            return ResponseEntity.status(403).build();
+//        }
+//        return ResponseEntity.ok(new LoginResponse(jwtUtil.generateToken(loginRequest.getUsername())));
+//    }
 
 
 }
