@@ -38,6 +38,7 @@
 //                .antMatchers("/").permitAll()   // authorize all users (both anonymous and logged in) to access the page starting with ‘/'
 //                .antMatchers("/users/login").permitAll()
 //                .antMatchers("/users/*").hasAuthority(User.ROLE_ADMINISTRATOR_SISTEMA)
+// treba da se doda za SmerController
 //                .antMatchers("/predmeti/*").hasAnyAuthority(User.ROLE_ADMINISTRATOR_PREDMETA, User.ROLE_ADMINISTRATOR_SISTEMA)
 //                .antMatchers("/izvestaji/*").hasAnyAuthority(User.ROLE_ADMINISTRATOR_PREDMETA, User.ROLE_ADMINISTRATOR_SISTEMA)
 //                .antMatchers("/skolskaGodina/*").hasAnyAuthority(User.ROLE_ADMINISTRATOR_PREDMETA, User.ROLE_ADMINISTRATOR_SISTEMA)

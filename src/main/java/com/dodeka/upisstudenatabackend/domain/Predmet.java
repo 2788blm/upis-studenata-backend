@@ -1,5 +1,6 @@
 package com.dodeka.upisstudenatabackend.domain;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -15,10 +16,12 @@ import javax.persistence.*;
 public class Predmet {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    private Integer id;
 
-    @ManyToOne
+    @ManyToOne/*(cascade = CascadeType.PERSIST)*/
+//    @JsonManagedReference
+//    @Cascade({CascadeType.SAVE_UPDATE})
     private SkolskaGodina skolskaGodina;
 
     @ManyToOne

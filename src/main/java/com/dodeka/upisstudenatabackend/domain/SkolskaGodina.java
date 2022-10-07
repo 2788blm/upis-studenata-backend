@@ -1,6 +1,8 @@
 package com.dodeka.upisstudenatabackend.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -19,12 +21,13 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 public class SkolskaGodina {
-    
+
     @Id
     private String godina;  // 2021/2022
 
     @OneToMany(mappedBy = "skolskaGodina", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<Predmet> predmeti;
+//    @JsonBackReference
+    private List<Predmet> predmeti;
 
 
 }

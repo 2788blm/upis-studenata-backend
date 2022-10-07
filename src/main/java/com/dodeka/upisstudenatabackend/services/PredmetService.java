@@ -24,24 +24,45 @@ public class PredmetService {
     @Autowired
     private AnketaRepository anketaRepository;
 
-    public List<Predmet> getAll(SkolskaGodina skolskaGodina, Smer smer, String deoNaziva) {
+    public List<Predmet> getAll(String skolskaGodina, Integer smerId, String deoNaziva) {
+        System.out.println(skolskaGodina);
         BooleanBuilder predicate = new BooleanBuilder();
-        if (skolskaGodina != null && skolskaGodina.getGodina() != null) {
-            predicate.and(QPredmet.predmet.skolskaGodina.godina.eq(skolskaGodina.getGodina()));
+        if (skolskaGodina != null) {
+            predicate.and(QPredmet.predmet.skolskaGodina.godina.eq(skolskaGodina));
         }
-        if (smer != null && smer.getId() != null) {
-            predicate.and(QPredmet.predmet.smer.id.eq(smer.getId()));
+        if (smerId != null) {
+            predicate.and(QPredmet.predmet.smer.id.eq(smerId));
         }
         if (StringUtils.hasText(deoNaziva)) {
             predicate.and(QPredmet.predmet.naziv.contains(deoNaziva));
         }
         List<Predmet> predmeti = new ArrayList<>();
         predmetRepository.findAll(predicate).forEach(predmeti::add);
+        System.out.println("a;lkjfds;k");
         return predmeti;
+//        return predmetRepository.findAll();
     }
 
     @Transactional
     public Object createPredmet(Predmet predmet) {
+        if(predmet.getId() != null){
+            Optional<Predmet> predmetO = predmetRepository.findById(predmet.getId());
+            if(!predmetO.isPresent()){
+                throw new RuntimeException("Predmet sa id: " + predmet.getId() + " vec postoji");
+            }
+        }
+        BooleanBuilder predicate = new BooleanBuilder();
+        if (StringUtils.hasText(predmet.getNaziv())) {
+            predicate.and(QPredmet.predmet.naziv.contains(predmet.getNaziv()));
+        }
+        if (predmet.getSkolskaGodina() != null && predmet.getSkolskaGodina().getGodina() != null) {
+            predicate.and(QPredmet.predmet.skolskaGodina.godina.eq(predmet.getSkolskaGodina().getGodina()));
+        }
+        List<Predmet> predmeti = new ArrayList<>();
+        predmetRepository.findAll(predicate).forEach(predmeti::add);
+        if(!predmeti.isEmpty()){
+            throw new RuntimeException("Predmet sa nazivom: " + predmet.getNaziv() + " u skolskoj godini: " + predmet.getSkolskaGodina().getGodina() + " vec postoji!");
+        }
         return predmetRepository.save(predmet);
     }
 
@@ -84,16 +105,22 @@ public class PredmetService {
 
     @Transactional
     public void deletePredmet(int predmetId) throws NotFoundException, RuntimeException{
-        // Treba da proverim da li se predmet nalazi u nekoj anketi ili grupi
+
         Optional<Predmet> predmetO = predmetRepository.findById(predmetId);
         if (!predmetO.isPresent())
-            throw new NotFoundException("Predmet with id = " + predmetId + " doesn't exists");
-        List<Anketa> ankete = anketaRepository.findAll();
-        for(Anketa anketa : ankete) {
-            if(anketa.getPredmeti().contains(predmetO.get())){
-                throw new RuntimeException("Predmet je vezan za anketu!");
-            }
+            throw new NotFoundException("Predmet nije nadjen!");
+
+        List<Anketa> ankete = new ArrayList<>();
+        BooleanBuilder predicate = new BooleanBuilder();
+        predicate.and(QAnketa.anketa.predmeti.contains(predmetO.get()));
+        anketaRepository.findAll(predicate).forEach(ankete::add);
+        if(!ankete.isEmpty()) {
+            throw new RuntimeException("Predmet je vezan za anketu!");
         }
+
+        // Treba proveriti da li je predmet vezan za neku grupu. Sta je grupa?
+
         predmetRepository.delete(predmetO.get());
+
     }
 }

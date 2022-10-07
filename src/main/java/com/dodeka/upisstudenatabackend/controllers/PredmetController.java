@@ -22,10 +22,10 @@ public class PredmetController {
 
 
     @GetMapping("/izlistajPredmete")
-    public List<Predmet> getAll(@RequestParam(value = "skolskaGodina") SkolskaGodina skolskaGodina,
-                                @RequestParam(value = "smer", required = false) Smer smer,
+    public List<Predmet> getAll(@RequestParam(value = "skolskaGodina") String skolskaGodina,
+                                @RequestParam(value = "smer", required = false) Integer smerId,
                                 @RequestParam(value = "deoNaziva", required = false) String deoNaziva) {
-        return predmetService.getAll(skolskaGodina, smer, deoNaziva);
+        return predmetService.getAll(skolskaGodina, smerId, deoNaziva);
     }
 
     @PostMapping("/kreirajPredmet")
@@ -37,8 +37,8 @@ public class PredmetController {
         }
     }
 
-    @GetMapping("/predmet/{id}")
-    public ResponseEntity<Object> getPredmetById(@PathVariable int predmetId) {
+    @GetMapping("/predmet/{predmetId}")
+    public ResponseEntity<Object> getPredmetById(@PathVariable Integer predmetId) {
         try {
             return ResponseEntity.status(HttpStatus.OK).body(predmetService.getPredmetById(predmetId));
         } catch (NotFoundException ex) {
@@ -55,8 +55,8 @@ public class PredmetController {
         }
     }
 
-    @DeleteMapping("/obrisiPredmet/{id}")
-    public ResponseEntity<Integer> deletePredmet(@PathVariable int predmetId){
+    @DeleteMapping("/obrisiPredmet/{predmetId}")
+    public ResponseEntity<Integer> deletePredmet(@PathVariable Integer predmetId){
         try {
             predmetService.deletePredmet(predmetId);
             return new ResponseEntity<>(predmetId, HttpStatus.OK);

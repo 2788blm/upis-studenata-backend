@@ -29,8 +29,8 @@ databaseChangeLog:
               - column:
                   name: brGodinaStudija
                   type: int(2)
-                  constraints:
-                    nullable: false
+#                  constraints:
+#                    nullable: false
               - column:
                   name: zvanje
                   type: varchar(36)
@@ -113,10 +113,10 @@ databaseChangeLog:
                   constraints:
                     nullable: false
               - column:
-                  name: tip_predmeta
+                  name: tip
                   type: varchar(1)
-                  constraints:
-                    nullable: false
+#                  constraints:
+#                    nullable: false
   - changeSet:
       id: create_table_studijska_grupa
       author: veljko
