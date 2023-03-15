@@ -41,7 +41,7 @@ public class Anketa {
 
     public void calculateEspb() {
         espb = 0;
-        if(predmeti != null || !predmeti.isEmpty()) {
+        if(predmeti != null && !predmeti.isEmpty()) {
             for (Predmet predmet : predmeti) {
                 espb += predmet.getEspb();
             }
@@ -50,7 +50,7 @@ public class Anketa {
 
 //    {
 //        espb = 0;
-//        if(predmeti != null || !predmeti.isEmpty()) {
+//        if(predmeti != null && !predmeti.isEmpty()) {
 //            for (Predmet predmet : predmeti) {
 //                espb += predmet.getEspb();
 //            }
