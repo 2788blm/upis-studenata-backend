@@ -1,6 +1,7 @@
 package com.dodeka.upisstudenatabackend.domain;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -12,7 +13,6 @@ import javax.persistence.*;
 @Data
 @Builder
 @NoArgsConstructor
-@AllArgsConstructor
 public class Predmet {
 
     @Id
@@ -22,6 +22,7 @@ public class Predmet {
     @ManyToOne/*(cascade = CascadeType.PERSIST)*/
 //    @JsonManagedReference
 //    @Cascade({CascadeType.SAVE_UPDATE})
+    @NotNull
     private SkolskaGodina skolskaGodina;
 
     @ManyToOne

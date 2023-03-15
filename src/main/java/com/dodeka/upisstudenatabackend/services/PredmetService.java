@@ -25,7 +25,6 @@ public class PredmetService {
     private AnketaRepository anketaRepository;
 
     public List<Predmet> getAll(String skolskaGodina, Integer smerId, String deoNaziva) {
-        System.out.println(skolskaGodina);
         BooleanBuilder predicate = new BooleanBuilder();
         if (skolskaGodina != null) {
             predicate.and(QPredmet.predmet.skolskaGodina.godina.eq(skolskaGodina));
@@ -38,7 +37,6 @@ public class PredmetService {
         }
         List<Predmet> predmeti = new ArrayList<>();
         predmetRepository.findAll(predicate).forEach(predmeti::add);
-        System.out.println("a;lkjfds;k");
         return predmeti;
 //        return predmetRepository.findAll();
     }
@@ -79,14 +77,14 @@ public class PredmetService {
     public Predmet updatePredmet(Predmet predmet) throws NotFoundException {
         if(predmet.getSmer() == null)
             throw new RuntimeException("Smer cannot be empty");
-        if (StringUtils.hasText(predmet.getNaziv()))
+        if (!StringUtils.hasText(predmet.getNaziv()))
             throw new RuntimeException("Name cannot be empty");
         if(predmet.getEspb() < 0)
             throw new RuntimeException("Espb cannot be negative");
-        if(predmet.getSemestar() <= 0 || predmet.getSemestar() > 8)
+        if(predmet.getSemestar() < 1 || predmet.getSemestar() > 8)
             throw new RuntimeException("Semestar must be a number from 1 to 8");
         if(predmet.getTip() == null)
-            throw new RuntimeException("Espb cannot be negative");
+            throw new RuntimeException("Tip cannot be empty");
 
         Optional<Predmet> predmetO = predmetRepository.findById(predmet.getId());
         if(!predmetO.isPresent()){
@@ -118,7 +116,7 @@ public class PredmetService {
             throw new RuntimeException("Predmet je vezan za anketu!");
         }
 
-        // Treba proveriti da li je predmet vezan za neku grupu. Sta je grupa?
+        // Treba proveriti da li je predmet vezan za neku grupu. Sta je grupa? StudijskaGrupa
 
         predmetRepository.delete(predmetO.get());
 

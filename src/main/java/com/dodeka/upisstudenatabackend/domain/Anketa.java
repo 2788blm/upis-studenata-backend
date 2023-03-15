@@ -11,6 +11,7 @@ import java.util.Set;
 
 @Entity
 @Data
+@NoArgsConstructor
 public class Anketa {
 
     @Id

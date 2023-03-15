@@ -71,9 +71,8 @@ public class UsersService /*implements UserDetailsService */{
         updatedUser.setEmail(user.getEmail());
         updatedUser.setRoles(user.getRoles());
         updatedUser.setActive(user.isActive());
-//        if (!StringUtils.hasText(user.getPassword())) { mozda treba da se napravi zasebno za menjanje sifre
-////            updatedUser.setPassword(passwordEncoder.encode(user.getPassword()));
-//            user.setPassword(user.getPassword());
+//        if (StringUtils.hasText(user.getPassword())) {
+//            updatedUser.setPassword(passwordEncoder.encode(user.getPassword()));
 //        }
         return userRepository.save(updatedUser);
     }
@@ -94,8 +93,7 @@ public class UsersService /*implements UserDetailsService */{
         if(!userO.isPresent()){
             throw new NotFoundException("User with email = " + email + " doesn't exists");
         }
-        User user = userO.get();
-        return user;
+        return userO.get();
     }
 
 
