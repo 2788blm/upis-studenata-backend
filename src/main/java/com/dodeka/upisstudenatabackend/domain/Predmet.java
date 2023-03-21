@@ -13,6 +13,7 @@ import javax.persistence.*;
 @Data
 @Builder
 @NoArgsConstructor
+@AllArgsConstructor
 public class Predmet {
 
     @Id

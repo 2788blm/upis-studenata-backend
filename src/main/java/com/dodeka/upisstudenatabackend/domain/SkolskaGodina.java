@@ -25,9 +25,8 @@ public class SkolskaGodina {
     @Id
     private String godina;  // 2021/2022
 
-    @OneToMany(mappedBy = "skolskaGodina", cascade = CascadeType.ALL, orphanRemoval = true)
-//    @JsonBackReference
-    private List<Predmet> predmeti;
+//    @OneToMany(mappedBy = "skolskaGodina", cascade = CascadeType.ALL, orphanRemoval = true)
+//    private List<Predmet> predmeti;
 
 
 }
