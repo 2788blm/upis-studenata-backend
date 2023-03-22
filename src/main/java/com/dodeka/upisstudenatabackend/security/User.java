@@ -76,7 +76,6 @@ public class User {
 
 
 
-    public static final String ROLE_STUDENT = "STUDENT";
     public static final String ROLE_ADMINISTRATOR_PREDMETA = "ADMINISTRATOR_PREDMETA";
     public static final String ROLE_ADMINISTRATOR_SISTEMA = "ADMINISTRATOR_SISTEMA";
     public static final String ROLE_SEKRETAR = "SEKRETAR";

@@ -41,9 +41,6 @@ public class UsersService /*implements UserDetailsService */{
         if (CollectionUtils.isEmpty(user.getRoles())) {
             throw new RuntimeException("Roles cannot be empty");
         }
-        if (user.getRoles().contains(User.ROLE_STUDENT) && (user.getRoles().contains(User.ROLE_SEKRETAR) || user.getRoles().contains(User.ROLE_ADMINISTRATOR_PREDMETA) || user.getRoles().contains(User.ROLE_ADMINISTRATOR_SISTEMA))) {
-            throw new RuntimeException("Student role cannot be assigned together with Sekretar, Administrator predmeta or Administrator sistema role.");
-        }
 
         return userRepository.save(user);
     }
@@ -58,9 +55,6 @@ public class UsersService /*implements UserDetailsService */{
         }
         if (!StringUtils.hasText(user.getEmail())) {
             throw new RuntimeException("Email cannot be empty");
-        }
-        if (user.getRoles().contains(User.ROLE_STUDENT) && (user.getRoles().contains(User.ROLE_SEKRETAR) || user.getRoles().contains(User.ROLE_ADMINISTRATOR_PREDMETA) || user.getRoles().contains(User.ROLE_ADMINISTRATOR_SISTEMA))) {
-            throw new RuntimeException("Student role cannot be assigned together with Sekretar, Administrator predmeta or Administrator sistema role.");
         }
         Optional<User> userO = userRepository.findById(user.getUserId());
         if(!userO.isPresent()){
