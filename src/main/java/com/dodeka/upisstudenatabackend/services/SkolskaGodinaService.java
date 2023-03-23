@@ -7,6 +7,7 @@ import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityExistsException;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -34,7 +35,7 @@ public class SkolskaGodinaService {
     public SkolskaGodina addSkolskaGodina(SkolskaGodina skolskaGodina) throws NotFoundException {
         Optional<SkolskaGodina> skolskaGodinaO = skolskaGodinaRepository.findById(skolskaGodina.getGodina());
         if(skolskaGodinaO.isPresent()){
-            throw new NotFoundException("Skolska godina" + skolskaGodina.getGodina() + " vec postoji!");
+            throw new EntityExistsException("Skolska godina" + skolskaGodina.getGodina() + " vec postoji!");
         }
         return skolskaGodinaRepository.save(skolskaGodina);
     }
