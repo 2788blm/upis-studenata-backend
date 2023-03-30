@@ -1,7 +1,6 @@
 package com.dodeka.upisstudenatabackend.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -9,35 +8,45 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Set;
 
-@Entity
 @Data
 @NoArgsConstructor
+@Table(name = "anketa")
+@Entity
 public class Anketa {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @ManyToOne
-    private Student student;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "godina_studija")
+    private GodinaStudija godinaStudijaKojuUpisuje;
 
-    @UpdateTimestamp
-    private LocalDateTime datum;
-
-    private int godinaStudija;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "godina_upisa")
+    private TipUpisa tipUpisa;
 
     private int espb;
 
-    @ManyToMany
+    @UpdateTimestamp    // Da li ovo ili nesto drugo posto je time a ne date ???
+    private LocalDateTime datumPopunjavanja;
+
+    @ManyToMany(mappedBy = "ankete")
+    @JsonIgnore
     private Set<Predmet> predmeti;
 
-    public Anketa(Student student, int godinaStudija, Set<Predmet> predmeti) {
+    @ManyToOne
+    private Student student;
+
+
+
+    public Anketa(Student student, GodinaStudija godinaStudija, TipUpisa tipUpisa, Set<Predmet> predmeti) {
         this.student = student;
-        this.godinaStudija = godinaStudija;
+        this.godinaStudijaKojuUpisuje = godinaStudija;
+        this.tipUpisa = tipUpisa;
         this.predmeti = predmeti;
         calculateEspb();
     }
-
 
     public void calculateEspb() {
         espb = 0;

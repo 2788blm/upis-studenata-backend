@@ -1,9 +1,6 @@
 package com.dodeka.upisstudenatabackend.dto;
 
-import com.dodeka.upisstudenatabackend.domain.Anketa;
-import com.dodeka.upisstudenatabackend.domain.Predmet;
-import com.dodeka.upisstudenatabackend.domain.Smer;
-import com.dodeka.upisstudenatabackend.domain.StudijskaGrupa;
+import com.dodeka.upisstudenatabackend.domain.*;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -19,15 +16,15 @@ public class AnketaDto {
 
     private String prezime;
 
-    private Smer smer;
-
     private String brojIndeksa;
 
-    private int godinaUpisa;
+    private Smer smer;
+
+    private GodinaStudija godinaStudija;
+
+    private TipUpisa tipUpisa;
 
     private StudijskaGrupa studijskaGrupa;
-
-    private int godinaStudija;
 
     private Set<Predmet> predmeti;
 

@@ -5,6 +5,7 @@ import com.dodeka.upisstudenatabackend.security.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -12,4 +13,5 @@ public interface SmerRepository extends JpaRepository<Smer, Integer> {
 
     Optional<Object> findBySifra(String sifra);
 
+    List<Smer> findByNaziv(String nazivSmera);
 }

@@ -20,15 +20,15 @@ public class UpisController {
     private UpisService upisService;
 
 
-    @GetMapping("/vratiOdgovarajuceIspite")
-    public ResponseEntity<Object> getAvailableSubjects(@RequestParam(name = "smer") String smer,
-                                                        @RequestParam(name = "semestar") int semestar) {
-        try {
-            return ResponseEntity.status(HttpStatus.OK).body(upisService.getAvailableSubjects(smer, semestar)); // godina?
-        } catch (Exception ex) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
-        }
-    }
+//    @GetMapping("/vratiOdgovarajuceIspite")
+//    public ResponseEntity<Object> getAvailableSubjects(@RequestParam(name = "smer") String smer,
+//                                                        @RequestParam(name = "semestar") int semestar) {
+//        try {
+//            return ResponseEntity.status(HttpStatus.OK).body(upisService.getAvailableSubjects(smer, semestar)); // godina?
+//        } catch (Exception ex) {
+//            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
+//        }
+//    }
 
     @PostMapping("/unesiPodatkeIzAnkete")
     public void addStudentInformations(@RequestBody AnketaDto anketaDto){

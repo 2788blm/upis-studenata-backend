@@ -1,32 +1,40 @@
 package com.dodeka.upisstudenatabackend.domain;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import java.util.List;
+import javax.persistence.*;
 import java.util.Set;
 
-@Entity
+
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(name = "skolska_godina")
+@Entity
 public class SkolskaGodina {
 
     @Id
+    @Column(length = 9)
     private String godina;  // 2021/2022
 
-//    @OneToMany(mappedBy = "skolskaGodina", cascade = CascadeType.ALL, orphanRemoval = true)
-//    private List<Predmet> predmeti;
+    @OneToMany(mappedBy = "skolskaGodina")
+    private Set<Predmet> predmeti;
 
+    @ManyToMany
+    @JoinTable(
+            name = "skolske_godine_smerovi",
+            joinColumns = @JoinColumn(name = "skolska_godina_id", referencedColumnName = "godina"),
+            inverseJoinColumns = @JoinColumn(name = "smer_id", referencedColumnName = "id")
+    )
+    private Set<Smer> smerovi;
+
+    @Column(name = "studijske_grupe")
+    @OneToMany(mappedBy = "skolskaGodina")
+    private Set<StudijskaGrupa> studijskeGrupe;
 
 }

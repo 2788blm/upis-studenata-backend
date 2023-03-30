@@ -29,13 +29,19 @@ public class SmerController {
     }
 
     @DeleteMapping("/obrisiSmer/{smerId}")
-    public ResponseEntity<Integer> deletePredmet(@PathVariable Integer smerId){
+    public ResponseEntity<String> deletePredmet(@PathVariable Integer smerId){
         try {
             smerService.deletePredmet(smerId);
-            return new ResponseEntity<>(smerId, HttpStatus.OK);
-        } catch (NotFoundException e) {
-            return new ResponseEntity<>(smerId, HttpStatus.NOT_FOUND);
+            return ResponseEntity.status(HttpStatus.OK).build();
+        } catch (NotFoundException ex) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
         }
+//        try {
+//            smerService.deletePredmet(smerId);
+//            return new ResponseEntity<>(smerId, HttpStatus.OK);
+//        } catch (NotFoundException e) {
+//            return new ResponseEntity<>(smerId, HttpStatus.NOT_FOUND);
+//        }
     }
 
     @GetMapping("/izlistajSmerove")

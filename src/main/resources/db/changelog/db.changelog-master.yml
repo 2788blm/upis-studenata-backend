@@ -1,373 +1,373 @@
-databaseChangeLog:
-  - changeSet:
-      id: create_table_smer
-      author: veljko
-      preConditions:
-        - onFail: MARK_RAN
-          not:
-            tableExists:
-              tableName: smer
-      changes:
-        - createTable:
-            tableName: smer
-            columns:
-              - column:
-                  name: id
-                  type: int(19)
-                  constraints:
-                    primaryKey: true
-              - column:
-                  name: sifra
-                  type: varchar(36)
-                  constraints:
-                    nullable: false
-              - column:
-                  name: naziv
-                  type: varchar(36)
-                  constraints:
-                    nullable: false
-              - column:
-                  name: brGodinaStudija
-                  type: int(2)
+#databaseChangeLog:
+#  - changeSet:
+#      id: create_table_smer
+#      author: veljko
+#      preConditions:
+#        - onFail: MARK_RAN
+#          not:
+#            tableExists:
+#              tableName: smer
+#      changes:
+#        - createTable:
+#            tableName: smer
+#            columns:
+#              - column:
+#                  name: id
+#                  type: int(19)
+#                  constraints:
+#                    primaryKey: true
+#              - column:
+#                  name: sifra
+#                  type: varchar(36)
 #                  constraints:
 #                    nullable: false
-              - column:
-                  name: zvanje
-                  type: varchar(36)
-                  constraints:
-                    nullable: false
-              - column:
-                  name: espb
-                  type: int(3)
-                  constraints:
-                    nullable: false
-  - changeSet:
-      id: create_table_kursna_lista
-      author: veljko
-      preConditions:
-        - onFail: MARK_RAN
-          not:
-            tableExists:
-              tableName: kursna_lista
-      changes:
-        - createTable:
-            tableName: kursna_lista
-            columns:
-              - column:
-                  name: datum
-                  type: date
-                  constraints:
-                    primaryKey: true
-              - column:
-                  name: srednjiKursDinaraPremaEvru
-                  type: decimal(19,2)
-                  constraints:
-                    nullable: false
-  - changeSet:
-      id: create_table_skolska_godina
-      author: veljko
-      preConditions:
-        - onFail: MARK_RAN
-          not:
-            tableExists:
-              tableName: skolska_godina
-      changes:
-        - createTable:
-            tableName: skolska_godina
-            columns:
-              - column:
-                  name: godina
-                  type: varchar(9)
-                  constraints:
-                    primaryKey: true
-  - changeSet:
-      id: create_table_predmet
-      author: veljko
-      preConditions:
-        - onFail: MARK_RAN
-          not:
-            tableExists:
-              tableName: predmet
-      changes:
-        - createTable:
-            tableName: predmet
-            columns:
-              - column:
-                  name: id
-                  type: int(10)
-                  constraints:
-                    primaryKey: true
-              - column:
-                  name: naziv
-                  type: varchar(100)
-                  constraints:
-                    nullable: false
-              - column:
-                  name: espb
-                  type: int(2)
-                  constraints:
-                    nullable: false
-              - column:
-                  name: semestar
-                  type: int(1)
-                  constraints:
-                    nullable: false
-              - column:
-                  name: tip
-                  type: varchar(1)
+#              - column:
+#                  name: naziv
+#                  type: varchar(36)
 #                  constraints:
 #                    nullable: false
-  - changeSet:
-      id: create_table_studijska_grupa
-      author: veljko
-      preConditions:
-        - onFail: MARK_RAN
-          not:
-            tableExists:
-              tableName: studijska_grupa
-      changes:
-        - createTable:
-            tableName: studijska_grupa
-            columns:
-              - column:
-                  name: id
-                  type: int(10)
-                  constraints:
-                    primaryKey: true
-              - column:
-                  name: naziv
-                  type: varchar(255)
-                  constraints:
-                    nullable: false
-  - changeSet:
-      id: create_table_student
-      author: veljko
-      preConditions:
-        - onFail: MARK_RAN
-          not:
-            tableExists:
-              tableName: student
-      changes:
-        - createTable:
-            tableName: student
-            columns:
-              - column:
-                  name: email
-                  type: varchar(255)
-                  constraints:
-                    primaryKey: true
-              - column:
-                  name: ime
-                  type: varchar(255)
-                  constraints:
-                    nullable: false
-              - column:
-                  name: prezime
-                  type: varchar(255)
-                  constraints:
-                    nullable: false
-              - column:
-                  name: broj_indeksa
-                  type: varchar(10)
-                  constraints:
-                    nullable: false
-              - column:
-                  name: godina_upisa
-                  type: int(4)
-                  constraints:
-                    nullable: false
-  - changeSet:
-      id: create_table_anketa
-      author: veljko
-      preConditions:
-        - onFail: MARK_RAN
-          not:
-            tableExists:
-              tableName: anketa
-      changes:
-        - createTable:
-            tableName: anketa
-            columns:
-              - column:
-                  name: id
-                  type: int(10)
-                  constraints:
-                    primaryKey: true
-              - column:
-                  name: datum
-                  type: datetime
-                  constraints:
-                    nullable: false
-              - column:
-                  name: godina_studija
-                  type: int(1)
-                  constraints:
-                    nullable: false
-              - column:
-                  name: int
-                  type: varchar(3)
-                  constraints:
-                    nullable: false
-  - changeSet:
-      id: create_table_user
-      author: veljko
-      preConditions:
-        - onFail: MARK_RAN
-          not:
-            tableExists:
-              tableName: user
-      changes:
-        - createTable:
-            tableName: user
-            columns:
-              - column:
-                  name: user_id
-                  type: varchar(255)
-                  #                  type: bigint(20)
-                  constraints:
-                    primaryKey: true
-                    autoIncrement: true
-              - column:
-                  name: email
-                  type: varchar(255)
-                  constraints:
-                    nullable: false
-              - column:
-                  name: username
-                  type: varchar(255)
-                  constraints:
-                    nullable: false
-              - column:
-                  name: password
-                  type: varchar(255)
-                  constraints:
-                    nullable: false
-              - column:
-                  name: roles
-                  type: varchar(255)
-                  constraints:
+#              - column:
+#                  name: brGodinaStudija
+#                  type: int(2)
+##                  constraints:
+##                    nullable: false
+#              - column:
+#                  name: zvanje
+#                  type: varchar(36)
+#                  constraints:
 #                    nullable: false
-              - column:
-                  name: active
-                  type: boolean
-                  constraints:
-                    nullable: false
-
-
-
-  - changeSet:
-      id: add_foreign_key_constraints_for_table_skolska_godina
-      author: veljko
-      changes:
-        - addColumn:
-            tableName: skolska_godina
-            columns:
-              - column:
-                  name: skolska_godina_fk_predmet_id
-                  type: int(10)
-        - addForeignKeyConstraint:
-            baseColumnNames: skolska_godina_fk_predmet_id
-            baseTableName: skolska_godina
-            constraintName: skolska_godina_predmet
-            referencedColumnNames: id
-            referencedTableName: predmet
-  - changeSet:
-      id: add_foreign_key_constraints_for_table_predmet
-      author: veljko
-      changes:
-        - addColumn:
-            tableName: predmet
-            columns:
-              - column:
-                  name: predmet_fk_skolska_godina_id
-                  type: varchar(9)
-              - column:
-                  name: predmet_fk_smer_id
-                  type: int(10)
-        - addForeignKeyConstraint:
-            baseColumnNames: predmet_fk_skolska_godina_id
-            baseTableName: predmet
-            constraintName: predmet_skolska_godina
-            referencedColumnNames: godina
-            referencedTableName: skolska_godina
-        - addForeignKeyConstraint:
-            baseColumnNames: predmet_fk_smer_id
-            baseTableName: predmet
-            constraintName: predmet_smer
-            referencedColumnNames: id
-            referencedTableName: smer
-  - changeSet:
-      id: add_foreign_key_constraints_for_table_studijska_grupa
-      author: veljko
-      changes:
-        - addColumn:
-            tableName: studijska_grupa
-            columns:
-              - column:
-                  name: studijska_grupa_fk_skolska_godina
-                  type: varchar(9)
-        - addForeignKeyConstraint:
-            baseColumnNames: studijska_grupa_fk_skolska_godina
-            baseTableName: studijska_grupa
-            constraintName: studijska_grupa_skolska_godina
-            referencedColumnNames: godina
-            referencedTableName: skolska_godina
-  - changeSet:
-      id: add_foreign_key_constraints_for_table_student
-      author: veljko
-      changes:
-        - addColumn:
-            tableName: student
-            columns:
-              - column:
-                  name: student_fk_smer_id
-                  type: int(10)
-              - column:
-                  name: student_fk_studijska_grupa_id
-                  type: int(10)
-              - column:
-                  name: student_fk_anketa_id
-                  type: int(10)
-        - addForeignKeyConstraint:
-            baseColumnNames: student_fk_smer_id
-            baseTableName: student
-            constraintName: student_smer
-            referencedColumnNames: id
-            referencedTableName: smer
-        - addForeignKeyConstraint:
-            baseColumnNames: student_fk_studijska_grupa_id
-            baseTableName: student
-            constraintName: student_studijska_grupa
-            referencedColumnNames: id
-            referencedTableName: studijska_grupa
-        - addForeignKeyConstraint:
-            baseColumnNames: student_fk_anketa_id
-            baseTableName: student
-            constraintName: student_anketa
-            referencedColumnNames: id
-            referencedTableName: anketa
-  - changeSet:
-      id: add_foreign_key_constraints_for_table_anketa
-      author: veljko
-      changes:
-        - addColumn:
-            tableName: anketa
-            columns:
-              - column:
-                  name: anketa_fk_student_id
-                  type: varchar(255)
-              - column:
-                  name: anketa_fk_predmet_id
-                  type: int(10)
-        - addForeignKeyConstraint:
-            baseColumnNames: anketa_fk_student_id
-            baseTableName: anketa
-            constraintName: anketa_student
-            referencedColumnNames: email
-            referencedTableName: student
-        - addForeignKeyConstraint:
-            baseColumnNames: anketa_fk_predmet_id
-            baseTableName: anketa
-            constraintName: anketa_predmet
-            referencedColumnNames: id
-            referencedTableName: predmet
+#              - column:
+#                  name: espb
+#                  type: int(3)
+#                  constraints:
+#                    nullable: false
+#  - changeSet:
+#      id: create_table_kursna_lista
+#      author: veljko
+#      preConditions:
+#        - onFail: MARK_RAN
+#          not:
+#            tableExists:
+#              tableName: kursna_lista
+#      changes:
+#        - createTable:
+#            tableName: kursna_lista
+#            columns:
+#              - column:
+#                  name: datum
+#                  type: date
+#                  constraints:
+#                    primaryKey: true
+#              - column:
+#                  name: srednjiKursDinaraPremaEvru
+#                  type: decimal(19,2)
+#                  constraints:
+#                    nullable: false
+#  - changeSet:
+#      id: create_table_skolska_godina
+#      author: veljko
+#      preConditions:
+#        - onFail: MARK_RAN
+#          not:
+#            tableExists:
+#              tableName: skolska_godina
+#      changes:
+#        - createTable:
+#            tableName: skolska_godina
+#            columns:
+#              - column:
+#                  name: godina
+#                  type: varchar(9)
+#                  constraints:
+#                    primaryKey: true
+#  - changeSet:
+#      id: create_table_predmet
+#      author: veljko
+#      preConditions:
+#        - onFail: MARK_RAN
+#          not:
+#            tableExists:
+#              tableName: predmet
+#      changes:
+#        - createTable:
+#            tableName: predmet
+#            columns:
+#              - column:
+#                  name: id
+#                  type: int(10)
+#                  constraints:
+#                    primaryKey: true
+#              - column:
+#                  name: naziv
+#                  type: varchar(100)
+#                  constraints:
+#                    nullable: false
+#              - column:
+#                  name: espb
+#                  type: int(2)
+#                  constraints:
+#                    nullable: false
+#              - column:
+#                  name: semestar
+#                  type: int(1)
+#                  constraints:
+#                    nullable: false
+#              - column:
+#                  name: tip
+#                  type: varchar(1)
+##                  constraints:
+##                    nullable: false
+#  - changeSet:
+#      id: create_table_studijska_grupa
+#      author: veljko
+#      preConditions:
+#        - onFail: MARK_RAN
+#          not:
+#            tableExists:
+#              tableName: studijska_grupa
+#      changes:
+#        - createTable:
+#            tableName: studijska_grupa
+#            columns:
+#              - column:
+#                  name: id
+#                  type: int(10)
+#                  constraints:
+#                    primaryKey: true
+#              - column:
+#                  name: naziv
+#                  type: varchar(255)
+#                  constraints:
+#                    nullable: false
+#  - changeSet:
+#      id: create_table_student
+#      author: veljko
+#      preConditions:
+#        - onFail: MARK_RAN
+#          not:
+#            tableExists:
+#              tableName: student
+#      changes:
+#        - createTable:
+#            tableName: student
+#            columns:
+#              - column:
+#                  name: email
+#                  type: varchar(255)
+#                  constraints:
+#                    primaryKey: true
+#              - column:
+#                  name: ime
+#                  type: varchar(255)
+#                  constraints:
+#                    nullable: false
+#              - column:
+#                  name: prezime
+#                  type: varchar(255)
+#                  constraints:
+#                    nullable: false
+#              - column:
+#                  name: broj_indeksa
+#                  type: varchar(10)
+#                  constraints:
+#                    nullable: false
+#              - column:
+#                  name: godina_upisa
+#                  type: int(4)
+#                  constraints:
+#                    nullable: false
+#  - changeSet:
+#      id: create_table_anketa
+#      author: veljko
+#      preConditions:
+#        - onFail: MARK_RAN
+#          not:
+#            tableExists:
+#              tableName: anketa
+#      changes:
+#        - createTable:
+#            tableName: anketa
+#            columns:
+#              - column:
+#                  name: id
+#                  type: int(10)
+#                  constraints:
+#                    primaryKey: true
+#              - column:
+#                  name: datum
+#                  type: datetime
+#                  constraints:
+#                    nullable: false
+#              - column:
+#                  name: godina_studija
+#                  type: int(1)
+#                  constraints:
+#                    nullable: false
+#              - column:
+#                  name: int
+#                  type: varchar(3)
+#                  constraints:
+#                    nullable: false
+#  - changeSet:
+#      id: create_table_user
+#      author: veljko
+#      preConditions:
+#        - onFail: MARK_RAN
+#          not:
+#            tableExists:
+#              tableName: user
+#      changes:
+#        - createTable:
+#            tableName: user
+#            columns:
+#              - column:
+#                  name: user_id
+#                  type: varchar(255)
+#                  #                  type: bigint(20)
+#                  constraints:
+#                    primaryKey: true
+#                    autoIncrement: true
+#              - column:
+#                  name: email
+#                  type: varchar(255)
+#                  constraints:
+#                    nullable: false
+#              - column:
+#                  name: username
+#                  type: varchar(255)
+#                  constraints:
+#                    nullable: false
+#              - column:
+#                  name: password
+#                  type: varchar(255)
+#                  constraints:
+#                    nullable: false
+#              - column:
+#                  name: roles
+#                  type: varchar(255)
+#                  constraints:
+##                    nullable: false
+#              - column:
+#                  name: active
+#                  type: boolean
+#                  constraints:
+#                    nullable: false
+#
+#
+#
+#  - changeSet:
+#      id: add_foreign_key_constraints_for_table_skolska_godina
+#      author: veljko
+#      changes:
+#        - addColumn:
+#            tableName: skolska_godina
+#            columns:
+#              - column:
+#                  name: skolska_godina_fk_predmet_id
+#                  type: int(10)
+#        - addForeignKeyConstraint:
+#            baseColumnNames: skolska_godina_fk_predmet_id
+#            baseTableName: skolska_godina
+#            constraintName: skolska_godina_predmet
+#            referencedColumnNames: id
+#            referencedTableName: predmet
+#  - changeSet:
+#      id: add_foreign_key_constraints_for_table_predmet
+#      author: veljko
+#      changes:
+#        - addColumn:
+#            tableName: predmet
+#            columns:
+#              - column:
+#                  name: predmet_fk_skolska_godina_id
+#                  type: varchar(9)
+#              - column:
+#                  name: predmet_fk_smer_id
+#                  type: int(10)
+#        - addForeignKeyConstraint:
+#            baseColumnNames: predmet_fk_skolska_godina_id
+#            baseTableName: predmet
+#            constraintName: predmet_skolska_godina
+#            referencedColumnNames: godina
+#            referencedTableName: skolska_godina
+#        - addForeignKeyConstraint:
+#            baseColumnNames: predmet_fk_smer_id
+#            baseTableName: predmet
+#            constraintName: predmet_smer
+#            referencedColumnNames: id
+#            referencedTableName: smer
+#  - changeSet:
+#      id: add_foreign_key_constraints_for_table_studijska_grupa
+#      author: veljko
+#      changes:
+#        - addColumn:
+#            tableName: studijska_grupa
+#            columns:
+#              - column:
+#                  name: studijska_grupa_fk_skolska_godina
+#                  type: varchar(9)
+#        - addForeignKeyConstraint:
+#            baseColumnNames: studijska_grupa_fk_skolska_godina
+#            baseTableName: studijska_grupa
+#            constraintName: studijska_grupa_skolska_godina
+#            referencedColumnNames: godina
+#            referencedTableName: skolska_godina
+#  - changeSet:
+#      id: add_foreign_key_constraints_for_table_student
+#      author: veljko
+#      changes:
+#        - addColumn:
+#            tableName: student
+#            columns:
+#              - column:
+#                  name: student_fk_smer_id
+#                  type: int(10)
+#              - column:
+#                  name: student_fk_studijska_grupa_id
+#                  type: int(10)
+#              - column:
+#                  name: student_fk_anketa_id
+#                  type: int(10)
+#        - addForeignKeyConstraint:
+#            baseColumnNames: student_fk_smer_id
+#            baseTableName: student
+#            constraintName: student_smer
+#            referencedColumnNames: id
+#            referencedTableName: smer
+#        - addForeignKeyConstraint:
+#            baseColumnNames: student_fk_studijska_grupa_id
+#            baseTableName: student
+#            constraintName: student_studijska_grupa
+#            referencedColumnNames: id
+#            referencedTableName: studijska_grupa
+#        - addForeignKeyConstraint:
+#            baseColumnNames: student_fk_anketa_id
+#            baseTableName: student
+#            constraintName: student_anketa
+#            referencedColumnNames: id
+#            referencedTableName: anketa
+#  - changeSet:
+#      id: add_foreign_key_constraints_for_table_anketa
+#      author: veljko
+#      changes:
+#        - addColumn:
+#            tableName: anketa
+#            columns:
+#              - column:
+#                  name: anketa_fk_student_id
+#                  type: varchar(255)
+#              - column:
+#                  name: anketa_fk_predmet_id
+#                  type: int(10)
+#        - addForeignKeyConstraint:
+#            baseColumnNames: anketa_fk_student_id
+#            baseTableName: anketa
+#            constraintName: anketa_student
+#            referencedColumnNames: email
+#            referencedTableName: student
+#        - addForeignKeyConstraint:
+#            baseColumnNames: anketa_fk_predmet_id
+#            baseTableName: anketa
+#            constraintName: anketa_predmet
+#            referencedColumnNames: id
+#            referencedTableName: predmet

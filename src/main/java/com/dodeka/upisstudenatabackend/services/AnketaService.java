@@ -36,8 +36,6 @@ public class AnketaService {
             throw new RuntimeException("Anketa is null!");
         if(anketa.getStudent() == null)
             throw new RuntimeException("Student is null!");
-        if(anketa.getGodinaStudija() < 1 || anketa.getGodinaStudija() > 4)
-            throw new RuntimeException("Godina studija must be a number from 1 to 4");
         if(CollectionUtils.isEmpty(anketa.getPredmeti()))
             throw new RuntimeException("Predmeti cannot be empty!");
 
@@ -47,7 +45,7 @@ public class AnketaService {
         }
         Anketa updatedAnketa = anketaO.get();
         updatedAnketa.setStudent(anketa.getStudent());
-        updatedAnketa.setGodinaStudija(anketa.getGodinaStudija());
+        updatedAnketa.setGodinaStudijaKojuUpisuje(anketa.getGodinaStudijaKojuUpisuje());
         updatedAnketa.setEspb(anketa.getEspb());    //  ili se ovo samo izracunava?
         updatedAnketa.setPredmeti(anketa.getPredmeti());
 
@@ -66,10 +64,10 @@ public class AnketaService {
             predicate.and(filter);
         }
         if (datumOd != null) {
-            predicate.and(QAnketa.anketa.datum.after(datumOd));
+            predicate.and(QAnketa.anketa.datumPopunjavanja.after(datumOd));
         }
         if (datumDo != null) {
-            predicate.and(QAnketa.anketa.datum.before(datumDo));
+            predicate.and(QAnketa.anketa.datumPopunjavanja.before(datumDo));
         }
         Pageable pageRequest;
         if(sortOrder.equals("desc")) {

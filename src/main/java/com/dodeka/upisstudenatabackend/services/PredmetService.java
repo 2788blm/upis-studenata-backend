@@ -3,9 +3,9 @@ package com.dodeka.upisstudenatabackend.services;
 import com.dodeka.upisstudenatabackend.domain.*;
 import com.dodeka.upisstudenatabackend.repositories.AnketaRepository;
 import com.dodeka.upisstudenatabackend.repositories.PredmetRepository;
+import com.dodeka.upisstudenatabackend.repositories.SmerRepository;
 import com.querydsl.core.BooleanBuilder;
 import javassist.NotFoundException;
-import liquibase.pro.packaged.Q;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -24,21 +24,22 @@ public class PredmetService {
     @Autowired
     private AnketaRepository anketaRepository;
 
+
     public List<Predmet> getAll(String skolskaGodina, Integer smerId, String deoNaziva) {
-        BooleanBuilder predicate = new BooleanBuilder();
-        if (skolskaGodina != null) {
-            predicate.and(QPredmet.predmet.skolskaGodina.godina.eq(skolskaGodina));
-        }
-        if (smerId != null) {
-            predicate.and(QPredmet.predmet.smer.id.eq(smerId));
-        }
-        if (StringUtils.hasText(deoNaziva)) {
-            predicate.and(QPredmet.predmet.naziv.contains(deoNaziva));
-        }
-        List<Predmet> predmeti = new ArrayList<>();
-        predmetRepository.findAll(predicate).forEach(predmeti::add);
-        return predmeti;
-//        return predmetRepository.findAll();
+//        BooleanBuilder predicate = new BooleanBuilder();
+//        if (skolskaGodina != null) {
+//            predicate.and(QPredmet.predmet.skolskaGodina.godina.eq(skolskaGodina));
+//        }
+//        if (smerId != null) {
+//            predicate.and(QPredmet.predmet.smerovi.any().id.eq(smerId));
+//        }
+//        if (StringUtils.hasText(deoNaziva)) {
+//            predicate.and(QPredmet.predmet.naziv.contains(deoNaziva));
+//        }
+//        List<Predmet> predmeti = new ArrayList<>();
+//        predmetRepository.findAll(predicate).forEach(predmeti::add);
+//        return predmeti;
+        return predmetRepository.findAll();
     }
 
     @Transactional
@@ -75,8 +76,8 @@ public class PredmetService {
 
     @Transactional
     public Predmet updatePredmet(Predmet predmet) throws NotFoundException {
-        if(predmet.getSmer() == null)
-            throw new RuntimeException("Smer cannot be empty");
+        if(predmet.getSmerovi() == null)
+            throw new RuntimeException("Smerovi cannot be empty");
         if (!StringUtils.hasText(predmet.getNaziv()))
             throw new RuntimeException("Name cannot be empty");
         if(predmet.getEspb() < 0)
@@ -92,7 +93,7 @@ public class PredmetService {
         }
         Predmet updatedPredmet = predmetO.get();
         updatedPredmet.setSkolskaGodina(predmet.getSkolskaGodina());
-        updatedPredmet.setSmer(predmet.getSmer());
+        updatedPredmet.setSmerovi(predmet.getSmerovi());
         updatedPredmet.setNaziv(predmet.getNaziv());
         updatedPredmet.setEspb(predmet.getEspb());
         updatedPredmet.setSemestar(predmet.getSemestar());

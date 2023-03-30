@@ -1,34 +1,28 @@
 package com.dodeka.upisstudenatabackend.domain;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import jakarta.validation.constraints.NotNull;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.Set;
 
-@Entity
+
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(name = "predmet")
+@Entity
 public class Predmet {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Integer id;
 
-    @ManyToOne/*(cascade = CascadeType.PERSIST)*/
-//    @JsonManagedReference
-//    @Cascade({CascadeType.SAVE_UPDATE})
-    @NotNull
-    private SkolskaGodina skolskaGodina;
-
-    @ManyToOne
-    private Smer smer;
-
+    @Column(length = 150)
     private String naziv;
 
     private int espb;
@@ -37,5 +31,23 @@ public class Predmet {
 
     @Enumerated(EnumType.STRING)
     private TipPredmeta tip;
+
+    @ManyToMany
+    @JoinTable(
+            name = "predmeti_ankete",
+            joinColumns = @JoinColumn(name = "predmet_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "anketa_id", referencedColumnName = "id")
+    )
+    private Set<Anketa> ankete;
+
+    @ManyToOne
+    private SkolskaGodina skolskaGodina;
+
+    @ManyToMany(mappedBy = "predmeti")
+    @JsonIgnore
+    private Set<Smer> smerovi;
+
+    @ManyToOne
+    private StudijskaGrupa studijskaGrupa;
 
 }
